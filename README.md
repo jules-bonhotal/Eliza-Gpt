@@ -1,5 +1,5 @@
 <!-- LTeX: language=fr -->
-# Gestion de Projet et Génie Logiciel, M1, département informatique, Lyon 1
+# Gestion de Projet et Génie Logiciel, M1, département informatique, Lyon 1, 2023-2024
 
 ## Dates importantes
 

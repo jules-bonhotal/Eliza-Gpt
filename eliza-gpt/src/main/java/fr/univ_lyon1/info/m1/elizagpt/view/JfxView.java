@@ -107,7 +107,11 @@ public class JfxView {
         pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) {
-				replyToUser("Ici, c'est moi qui pose les questions, connard.");
+            final String Reponse = processor.pickRandom(new String[] {
+                    "Ici, c'est moi qui pose les questions, connard (c'est une blague ʘ‿ʘ ). ",
+                    "Je vous renvoie la question. ",
+            });
+				replyToUser(Reponse);
             return;
         } 
         pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);

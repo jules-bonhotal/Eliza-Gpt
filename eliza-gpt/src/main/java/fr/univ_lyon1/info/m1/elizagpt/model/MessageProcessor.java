@@ -53,8 +53,8 @@ public class MessageProcessor {
             new Verb("ai", "avez"),
             new Verb("fais", "faites"),
             new Verb("sais", "savez"),
-            new Verb("peut", "pouvez"),
-            new Verb("doit", "devez"),
+            new Verb("peux", "pouvez"),
+            new Verb("veux", "voulez"),
             new Verb("dois", "devez"));
 
     /**

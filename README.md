@@ -117,7 +117,7 @@ email, ce fichier en contient une copie.
 
 * [TD1-design-patterns](http://matthieu-moy.fr/cours/mif01/TD1-patterns/TD-design-patterns.html)
 
-* Salles :
+* Salles : cf. TOMUSS et mail envoyé pour les étudiants.
   - Groupe A : Nautibus TD 2 : Matthieu Moy
   - Groupe B : Nautibus TD 3 : Joel Felderhoff
   - Groupe C : Nautibus TD12 : Lionel Medini

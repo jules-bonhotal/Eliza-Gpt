@@ -1,6 +1,20 @@
 <!-- LTEX: language=fr -->
 Ce fichier contiendra les nouvelles du cours. Un mail sera envoyé quand le fichier est mis à jour.
 
+# 19/09/2023 : petit bug du squelette
+
+Dans le squelette fourni, on utilise `USER_STYLE` comme style pour les messages
+d'ELIZA, et `ELIZA_STYLE` pour les messages de l'utilisateur. Il aurait bien
+entendu fallu faire l'inverse.
+
+Pour ne pas risquer de vous embêter avec des conflits, un correctif est proposé,
+mais seulement dans la branche `low-priority` du dépôt enseignants, que vous
+pouvez récupérer avec :
+
+```
+git pull --no-rebase moy low-priority
+```
+
 # 18/09/2023 : mise à jour du squelette, logistique cette semaine
 
 Il y avait une petite erreur dans votre squelette, le fichier setup-mvn-proxy.sh

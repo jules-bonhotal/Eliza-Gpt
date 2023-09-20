@@ -218,6 +218,7 @@ public class JfxView {
         }*/
 
 
+
     private void searchText(final TextField text) {
 		      
 

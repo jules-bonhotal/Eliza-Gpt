@@ -239,7 +239,7 @@ public class JfxView {
                 String t = ((Label) label).getText();
                 normalizedText = processor.normalize(t);
         		    matcher = pattern.matcher(normalizedText);
-                if (!matcher.matches()) {                  
+                if (!matcher.find()) {                  
                     toDelete.add((HBox) hBox);
                 }
 /*                if (!t.contains(text.getText())) {

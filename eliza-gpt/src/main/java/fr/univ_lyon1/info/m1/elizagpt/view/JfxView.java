@@ -108,7 +108,7 @@ public class JfxView {
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) {
             final String Reponse = processor.pickRandom(new String[] {
-                    "Ici, c'est moi qui pose les questions, connard (c'est une blague ʘ‿ʘ ). ",
+                    "Ici, c'est moi qui pose les questions. ",
                     "Je vous renvoie la question. ",
             });
 				replyToUser(Reponse);

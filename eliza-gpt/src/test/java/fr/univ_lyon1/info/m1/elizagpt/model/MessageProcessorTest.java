@@ -16,7 +16,6 @@ public class MessageProcessorTest {
 
         // Then
         assertThat(p.firstToSecondPerson("Je pense à mon chien."),
-                // TODO: Obviously wrong, it should be chien
                 is("vous pensez à votre chien."));
 
         assertThat(p.firstToSecondPerson("Je suis heureux."),

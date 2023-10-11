@@ -20,4 +20,4 @@ junit:
     # Useful only for debugging
     #- cat ~/.m2/settings.xml
   script:
-    - cd eliza-gpt/ && mvn test --batch-mode
+    - cd eliza-gpt/ && mvn test --batch-mode 

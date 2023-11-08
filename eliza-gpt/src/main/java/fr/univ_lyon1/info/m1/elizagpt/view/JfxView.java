@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
+// import fr.univ_lyon1.info.m1.elizagpt.model.processUserInput;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -80,6 +81,7 @@ public class JfxView {
         });
     }
     
+    /*la logic de reonpse ne devrais pas etre dans la meme fonction et devrais etre en le model*/
     private void sendMessage(final String text) {
         HBox hBox = new HBox();
         final Label label = new Label(text);
@@ -91,76 +93,78 @@ public class JfxView {
             dialog.getChildren().remove(hBox);
         });
     
-        String normalizedText = processor.normalize(text);
+        String reply = processor.processUserInput(text);
+        replyToUser(reply);
+        // String normalizedText = processor.normalize(text); //peut etre dans le controller
     
-        Pattern pattern;
-        Matcher matcher;
+        // Pattern pattern;
+        // Matcher matcher;
     
-    
-        // First, try to answer specifically to what the user said
-        pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            replyToUser("Bonjour " + matcher.group(1) + ".");
-            return;
-        }
-        pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            final String reponse = processor.pickRandom(new String[] {
-                    "Ici, c'est moi qui pose les questions. ",
-                    "Je vous renvoie la question. ",
-            });
-				replyToUser(reponse);
-            return;
-        } 
-        pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            if (getName() != null) {
-                replyToUser("Votre nom est " + getName() + ".");
-            } else {
-                replyToUser("Je ne connais pas votre nom.");
-            }
-            return;
-        }
-        pattern = Pattern.compile("Qui est le plus (.*) \\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            replyToUser("Le plus " + matcher.group(1)
-                        + " est bien sûr votre enseignant de MIF01 !");
-            return;
-        }
-        pattern = Pattern.compile("(Je .*)\\.", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            final String startQuestion = processor.pickRandom(new String[] {
-                "Pourquoi dites-vous que ",
-                "Pourquoi pensez-vous que ",
-                "Êtes-vous sûr que ",
-            });
-            replyToUser(startQuestion + processor.firstToSecondPerson(matcher.group(1)) + " ?");
-            return;
-        }
-        // Nothing clever to say, answer randomly
-        if (random.nextBoolean()) {
-            replyToUser("Il faut beau aujourd'hui, vous ne trouvez pas ?");
-            return;
-        }
-        if (random.nextBoolean()) {
-            replyToUser("Je ne comprends pas.");
-            return;
-        }
-        if (random.nextBoolean()) {
-            replyToUser("Hmmm, hmm ...");
-            return;
-        }
-        // Default answer
-        if (getName() != null) {
-            replyToUser("Qu'est-ce qui vous fait dire cela, " + getName() + " ?");
-        } else {
-            replyToUser("Qu'est-ce qui vous fait dire cela ?");
-        }
+        // /*toute cette partie devrait etre dans le model*/
+        // // First, try to answer specifically to what the user said
+        // pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
+        // matcher = pattern.matcher(normalizedText);
+        // if (matcher.matches()) {
+        //     replyToUser("Bonjour " + matcher.group(1) + ".");
+        //     return;
+        // }
+        // pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
+        // matcher = pattern.matcher(normalizedText);
+        // if (matcher.matches()) {
+        //     final String reponse = processor.pickRandom(new String[] {
+        //             "Ici, c'est moi qui pose les questions. ",
+        //             "Je vous renvoie la question. ",
+        //     });
+		// 		replyToUser(reponse);
+        //     return;
+        // } 
+        // pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
+        // matcher = pattern.matcher(normalizedText);
+        // if (matcher.matches()) {
+        //     if (getName() != null) {
+        //         replyToUser("Votre nom est " + getName() + ".");
+        //     } else {
+        //         replyToUser("Je ne connais pas votre nom.");
+        //     }
+        //     return;
+        // }
+        // pattern = Pattern.compile("Qui est le plus (.*) \\?", Pattern.CASE_INSENSITIVE);
+        // matcher = pattern.matcher(normalizedText);
+        // if (matcher.matches()) {
+        //     replyToUser("Le plus " + matcher.group(1)
+        //                 + " est bien sûr votre enseignant de MIF01 !");
+        //     return;
+        // }
+        // pattern = Pattern.compile("(Je .*)\\.", Pattern.CASE_INSENSITIVE);
+        // matcher = pattern.matcher(normalizedText);
+        // if (matcher.matches()) {
+        //     final String startQuestion = processor.pickRandom(new String[] {
+        //         "Pourquoi dites-vous que ",
+        //         "Pourquoi pensez-vous que ",
+        //         "Êtes-vous sûr que ",
+        //     });
+        //     replyToUser(startQuestion + processor.firstToSecondPerson(matcher.group(1)) + " ?");
+        //     return;
+        // }
+        // // Nothing clever to say, answer randomly
+        // if (random.nextBoolean()) {
+        //     replyToUser("Il faut beau aujourd'hui, vous ne trouvez pas ?");
+        //     return;
+        // }
+        // if (random.nextBoolean()) {
+        //     replyToUser("Je ne comprends pas.");
+        //     return;
+        // }
+        // if (random.nextBoolean()) {
+        //     replyToUser("Hmmm, hmm ...");
+        //     return;
+        // }
+        // // Default answer
+        // if (getName() != null) {
+        //     replyToUser("Qu'est-ce qui vous fait dire cela, " + getName() + " ?");
+        // } else {
+        //     replyToUser("Qu'est-ce qui vous fait dire cela ?");
+        // }
     }
 
     /**
@@ -218,9 +222,8 @@ public class JfxView {
         }*/
 
 
-
     private void searchText(final TextField text) {
-		      
+		      //TODO passer la recherche dans le model
 
         String normalizedText;		      
 		      
@@ -252,6 +255,20 @@ public class JfxView {
         dialog.getChildren().removeAll(toDelete);
         text.setText("");
     }
+
+
+/**
+ * Crée un widget d'entrée pour l'utilisateur.
+ *
+ * Ce widget permet à l'utilisateur de saisir du texte dans un champ de texte
+ * et d'envoyer ce texte en appuyant sur la touche "Enter" ou en cliquant sur
+ * le bouton "Send". Lorsque l'utilisateur envoie un message, le texte saisi est
+ * transmis à la fonction sendMessage, et le champ de texte est effacé pour
+ * permettre la saisie d'un nouveau message.
+ *
+ * @return Un conteneur d'interface utilisateur (HBox) comprenant un champ de texte
+ *         et un bouton "Send" pour l'envoi de messages.
+ */
 
     private Pane createInputWidget() {
         final Pane input = new HBox();

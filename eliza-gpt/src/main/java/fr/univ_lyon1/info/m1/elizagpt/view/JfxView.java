@@ -75,7 +75,7 @@ public class JfxView {
         label.setStyle(ELIZA_STYLE);
         hBox.setAlignment(Pos.BASELINE_LEFT);
         dialog.getChildren().add(hBox);
-        // TODO: a click on this hbox should delete the message.
+        // click on this hbox deletes the message.
         hBox.setOnMouseClicked(e -> {
             dialog.getChildren().remove(hBox);
         });
@@ -95,76 +95,6 @@ public class JfxView {
     
         String reply = processor.processUserInput(text);
         replyToUser(reply);
-        // String normalizedText = processor.normalize(text); //peut etre dans le controller
-    
-        // Pattern pattern;
-        // Matcher matcher;
-    
-        // /*toute cette partie devrait etre dans le model*/
-        // // First, try to answer specifically to what the user said
-        // pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
-        // matcher = pattern.matcher(normalizedText);
-        // if (matcher.matches()) {
-        //     replyToUser("Bonjour " + matcher.group(1) + ".");
-        //     return;
-        // }
-        // pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
-        // matcher = pattern.matcher(normalizedText);
-        // if (matcher.matches()) {
-        //     final String reponse = processor.pickRandom(new String[] {
-        //             "Ici, c'est moi qui pose les questions. ",
-        //             "Je vous renvoie la question. ",
-        //     });
-		// 		replyToUser(reponse);
-        //     return;
-        // } 
-        // pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
-        // matcher = pattern.matcher(normalizedText);
-        // if (matcher.matches()) {
-        //     if (getName() != null) {
-        //         replyToUser("Votre nom est " + getName() + ".");
-        //     } else {
-        //         replyToUser("Je ne connais pas votre nom.");
-        //     }
-        //     return;
-        // }
-        // pattern = Pattern.compile("Qui est le plus (.*) \\?", Pattern.CASE_INSENSITIVE);
-        // matcher = pattern.matcher(normalizedText);
-        // if (matcher.matches()) {
-        //     replyToUser("Le plus " + matcher.group(1)
-        //                 + " est bien sûr votre enseignant de MIF01 !");
-        //     return;
-        // }
-        // pattern = Pattern.compile("(Je .*)\\.", Pattern.CASE_INSENSITIVE);
-        // matcher = pattern.matcher(normalizedText);
-        // if (matcher.matches()) {
-        //     final String startQuestion = processor.pickRandom(new String[] {
-        //         "Pourquoi dites-vous que ",
-        //         "Pourquoi pensez-vous que ",
-        //         "Êtes-vous sûr que ",
-        //     });
-        //     replyToUser(startQuestion + processor.firstToSecondPerson(matcher.group(1)) + " ?");
-        //     return;
-        // }
-        // // Nothing clever to say, answer randomly
-        // if (random.nextBoolean()) {
-        //     replyToUser("Il faut beau aujourd'hui, vous ne trouvez pas ?");
-        //     return;
-        // }
-        // if (random.nextBoolean()) {
-        //     replyToUser("Je ne comprends pas.");
-        //     return;
-        // }
-        // if (random.nextBoolean()) {
-        //     replyToUser("Hmmm, hmm ...");
-        //     return;
-        // }
-        // // Default answer
-        // if (getName() != null) {
-        //     replyToUser("Qu'est-ce qui vous fait dire cela, " + getName() + " ?");
-        // } else {
-        //     replyToUser("Qu'est-ce qui vous fait dire cela ?");
-        // }
     }
 
     /**
@@ -213,18 +143,15 @@ public class JfxView {
         input.getChildren().addAll(firstLine, secondLine);
         return input;
     }
-/*
-        pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            replyToUser("Bonjour " + matcher.group(1) + ".");
-            return;
-        }*/
+
 
 
     private void searchText(final TextField text) {
-		      //TODO passer la recherche dans le model
-
+        //TODO: voire si il faut pas ecahper les chaaracter qui vont passer pour des regex, 
+                // genr si on chereche * ca cherche pas etoile mais tout les texte
+	    //TODO passer la recherche dans le model
+        //TODO: !!!!! faire en sorte que le controller et model ait aucune mention des 
+                //hBox et tout, le stockage devrait marcher de manière différente
         String normalizedText;		      
 		      
         Pattern pattern = Pattern.compile(text.getText(), Pattern.CASE_INSENSITIVE);

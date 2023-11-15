@@ -44,8 +44,15 @@ public class MessageProcessor {
         }
     }
 
-    public String processUserInput(String text) {//TODO VERRIFIER QUE CA CALCULE BIEN LES REPONSES
-        String normalizedText = normalize(text); //peut etre dans le controller
+    /**
+     * Processes user input and generates a response based on predefined patterns.
+     *
+     * @param text The user input to be processed.
+     * @return A generated response based on the analyzed patterns in the user input.
+     */
+
+    public String processUserInput(final String text) {
+        String normalizedText = normalize(text);
     
         Pattern pattern;
         Matcher matcher;
@@ -70,7 +77,7 @@ public class MessageProcessor {
         } 
         pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {//TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
+        if (matcher.matches()) { //TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
             // if (getName() != null) {
             //     // replyToUser("Votre nom est " + getName() + ".");
             //     return "Votre nom est " + getName() + ".";
@@ -120,6 +127,9 @@ public class MessageProcessor {
             return "Qu'est-ce qui vous fait dire cela ?";
         // }
     }
+
+
+
 
     /**
      * List of 3rd group verbs and their correspondance from 1st person signular

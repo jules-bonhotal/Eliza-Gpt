@@ -42,4 +42,42 @@ public class MessageProcessorTest {
                         hasProperty("firstSingular", is("suis")),
                         hasProperty("secondPlural", is("êtes")))));
     }
+
+
+    @Test
+    void testProcessUserInput() {
+        MessageProcessor processor = new MessageProcessor();
+
+
+        assertThat(processor.processUserInput("Qui est le plus intelligent ?"),
+                is("Le plus intelligent est bien sûr votre enseignant de MIF01 !"));
+
+        // Test random responses
+        String randomResponse = processor.processUserInput("Random input");
+        assertThat(randomResponse, anyOf(
+                is("Il faut beau aujourd'hui, vous ne trouvez pas ?"),
+                is("Je ne comprends pas."),
+                is("Hmmm, hmm ..."),
+                is("Qu'est-ce qui vous fait dire cela ?")));
+
+        // Add more tests to cover other scenarios
+
+        // Test firstToSecondPerson method
+        assertThat(processor.firstToSecondPerson("Je suis content."),
+                is("vous êtes contents."));
+    }
+
+
+    @Test
+    void testProcessUserInputRememberingName() {
+        assertThat(processor.processUserInput("Quel est mon nom ?"),
+                is("Je ne connais pas votre nom."));
+
+        assertThat(processor.processUserInput("Je m'appelle Alice."),
+                is("Bonjour Alice."));
+
+        assertThat(processor.processUserInput("Quel est mon nom ?"),
+                is("Votre nom est Alice."));
+    }
+
 }

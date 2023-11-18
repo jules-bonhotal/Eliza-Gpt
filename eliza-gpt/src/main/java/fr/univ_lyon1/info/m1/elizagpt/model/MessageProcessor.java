@@ -65,16 +65,7 @@ public class MessageProcessor {
             // replyToUser("Bonjour " + matcher.group(1) + ".");
             return "Bonjour " + matcher.group(1) + ".";
         }
-        pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            final String reponse = pickRandom(new String[] {//TODO VOIR SI CA DEVRAIT ETRE LA 
-                    "Ici, c'est moi qui pose les questions. ",
-                    "Je vous renvoie la question. ",
-            });
-                // replyToUser(reponse);
-            return reponse;
-        } 
+
         pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) { //TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
@@ -105,6 +96,20 @@ public class MessageProcessor {
             // replyToUser(startQuestion + processor.firstToSecondPerson(matcher.group(1)) + " ?");
             return startQuestion + firstToSecondPerson(matcher.group(1)) + " ?";
         }
+        pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
+        matcher = pattern.matcher(normalizedText);
+        if (matcher.matches()) {
+            final String reponse = pickRandom(new String[] {//TODO VOIR SI CA DEVRAIT ETRE LA
+                    "Ici, c'est moi qui pose les questions. ",
+                    "Je vous renvoie la question. ",
+            });
+            // replyToUser(reponse);
+            return reponse;
+        }
+
+
+
+
         // Nothing clever to say, answer randomly
         if (random.nextBoolean()) {
             // replyToUser("Il faut beau aujourd'hui, vous ne trouvez pas ?");

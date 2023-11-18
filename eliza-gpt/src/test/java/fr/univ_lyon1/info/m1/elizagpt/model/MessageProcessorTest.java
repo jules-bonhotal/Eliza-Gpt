@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Tests for MessageProcessor.
  */
 public class MessageProcessorTest {
+
     @Test
     void testFirstToSecondPerson() {
         // Given
@@ -43,11 +44,9 @@ public class MessageProcessorTest {
                         hasProperty("secondPlural", is("êtes")))));
     }
 
-
     @Test
     void testProcessUserInput() {
         MessageProcessor processor = new MessageProcessor();
-
 
         assertThat(processor.processUserInput("Qui est le plus intelligent ?"),
                 is("Le plus intelligent est bien sûr votre enseignant de MIF01 !"));
@@ -67,9 +66,10 @@ public class MessageProcessorTest {
                 is("vous êtes contents."));
     }
 
-
     @Test
     void testProcessUserInputRememberingName() {
+        MessageProcessor processor = new MessageProcessor();
+
         assertThat(processor.processUserInput("Quel est mon nom ?"),
                 is("Je ne connais pas votre nom."));
 
@@ -79,5 +79,4 @@ public class MessageProcessorTest {
         assertThat(processor.processUserInput("Quel est mon nom ?"),
                 is("Votre nom est Alice."));
     }
-
 }

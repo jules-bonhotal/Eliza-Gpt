@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
+import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
+import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 // import fr.univ_lyon1.info.m1.elizagpt.model.processUserInput;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,18 +26,25 @@ import java.util.Random;
 /**
  * Main class of the View (GUI) of the application.
  */
-public class JfxView {
+public class JfxView implements MessageObserver {
     private final VBox dialog;
     private TextField text = null;
     private TextField searchText = null;
     private Label searchTextLabel = null;
-    private MessageProcessor processor = new MessageProcessor();
+    private MessageProcessor processor;
+    private MessageStorage messageStorage;
     private final Random random = new Random();
     /**
      * Create the main view of the application.
      */
-        // TODO: style error in the following line. Check that checkstyle finds it, and then fix it.
-        public JfxView(final Stage stage, final int width, final int height) {
+    // TODO: style error in the following line. Check that checkstyle finds it, and then fix it.
+    public JfxView(final Stage stage, final int width, final int height, MessageStorage messageStorage) {
+        //s'ajoute en temps qu'observer du stockage des message pour etre notifier des changements
+        this.messageStorage = messageStorage;
+        messageStorage.registerObserver(this);
+
+        processor = new MessageProcessor(messageStorage);
+
         stage.setTitle("Eliza GPT");
 
         final VBox root = new VBox(10);
@@ -61,6 +70,12 @@ public class JfxView {
         text.requestFocus();
         stage.show();
     }
+
+
+    public void update() {
+        //TODO 
+    }
+
 
     static final String BASE_STYLE = "-fx-padding: 8px; "
             + "-fx-margin: 5px; "

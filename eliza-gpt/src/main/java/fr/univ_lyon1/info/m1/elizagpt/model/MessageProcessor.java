@@ -9,8 +9,20 @@ import java.util.regex.Pattern;
 /**
  * Logic to process a message (and probably reply to it).
  */
-public class MessageProcessor {
+public class MessageProcessor implements MessageObserver {
+    private final MessageStorage messageStorage;
     private final Random random = new Random();
+
+    @Override
+    public void update() {
+        //TODO     
+    }
+
+
+    public MessageProcessor(MessageStorage messageStorage) {
+        this.messageStorage = messageStorage;
+        this.messageStorage.registerObserver(this);
+    }
     /**
      * Normlize the text: remove extra spaces, add a final dot if missing.
      * @param text
@@ -22,6 +34,7 @@ public class MessageProcessor {
                 .replaceAll("\\s+$", "")
                 .replaceAll("[^\\.!?:]$", "$0.");
     }
+
 
     /**
      * Information about conjugation of a verb.

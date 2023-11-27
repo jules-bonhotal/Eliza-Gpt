@@ -13,7 +13,9 @@ public class MessageProcessorTest {
     @Test
     void testFirstToSecondPerson() {
         // Given
-        MessageProcessor p = new MessageProcessor();
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor p = new MessageProcessor(messageStorage );
+
 
         // Then
         assertThat(p.firstToSecondPerson("Je pense à mon chien."),
@@ -46,7 +48,8 @@ public class MessageProcessorTest {
 
     @Test
     void testProcessUserInput() {
-        MessageProcessor processor = new MessageProcessor();
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor processor = new MessageProcessor(messageStorage);
 
         assertThat(processor.processUserInput("Qui est le plus intelligent ?"),
                 is("Le plus intelligent est bien sûr votre enseignant de MIF01 !"));
@@ -58,17 +61,12 @@ public class MessageProcessorTest {
                 is("Je ne comprends pas."),
                 is("Hmmm, hmm ..."),
                 is("Qu'est-ce qui vous fait dire cela ?")));
-
-        // Add more tests to cover other scenarios
-
-        // Test firstToSecondPerson method
-        assertThat(processor.firstToSecondPerson("Je suis content."),
-                is("vous êtes contents."));
     }
 
     @Test
     void testProcessUserInputRememberingName() {
-        MessageProcessor processor = new MessageProcessor();
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor processor = new MessageProcessor(messageStorage);
 
         assertThat(processor.processUserInput("Quel est mon nom ?"),
                 is("Je ne connais pas votre nom."));

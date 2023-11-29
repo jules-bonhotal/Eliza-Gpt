@@ -2,6 +2,8 @@ package fr.univ_lyon1.info.m1.elizagpt.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
@@ -37,7 +39,6 @@ public class JfxView implements MessageObserver {
     /**
      * Create the main view of the application.
      */
-    // TODO: style error in the following line. Check that checkstyle finds it, and then fix it.
     public JfxView(final Stage stage, final int width, final int height, MessageStorage messageStorage) {
         //s'ajoute en temps qu'observer du stockage des message pour etre notifier des changements
         this.messageStorage = messageStorage;
@@ -72,9 +73,26 @@ public class JfxView implements MessageObserver {
     }
 
 
-    public void update() {
-        //TODO 
+    public void update(String notification) {
+        // Clear existing HBox elements
+        dialog.getChildren().clear();
+
+        // Get the messages from the MessageStorage
+        List<MessageStorage.Message> messages = messageStorage.getMessages();
+
+        // Create HBox elements based on the messages
+        for (MessageStorage.Message message : messages) {
+            HBox hBox;
+            if (message.isUserMessage()) {
+                hBox = createHBoxWithLabel(message.getMessageText(), USER_STYLE, message.getMessageId());
+            } else {
+                hBox = createHBoxWithLabel(message.getMessageText(), ELIZA_STYLE, message.getMessageId());
+            }
+            dialog.getChildren().add(hBox);
+        }
     }
+
+
 
 
     static final String BASE_STYLE = "-fx-padding: 8px; "
@@ -83,31 +101,63 @@ public class JfxView implements MessageObserver {
     static final String USER_STYLE = "-fx-background-color: #A0E0A0; " + BASE_STYLE;
     static final String ELIZA_STYLE = "-fx-background-color: #A0A0E0; " + BASE_STYLE;
 
-    private void replyToUser(final String text) {
+    //factorise la creation des hbox
+    private HBox createHBoxWithLabel(String text, String style) {
         HBox hBox = new HBox();
         final Label label = new Label(text);
         hBox.getChildren().add(label);
-        label.setStyle(ELIZA_STYLE);
+        label.setStyle(style);
         hBox.setAlignment(Pos.BASELINE_LEFT);
-        dialog.getChildren().add(hBox);
-        // click on this hbox deletes the message.
+
+        // Attribue un identifiant unique à la HBox pour distingué deux messages avec un texte identique dans le messgaeStorage
+        String uniqueId = generateUniqueId();
+        hBox.setId(uniqueId);
+
         hBox.setOnMouseClicked(e -> {
             dialog.getChildren().remove(hBox);
+            messageStorage.removeMessageById(hBox.getId());
         });
+
+        return hBox;
     }
-    
-    /*la logic de reonpse ne devrais pas etre dans la meme fonction et devrais etre en le model*/
-    private void sendMessage(final String text) {
+
+    private HBox createHBoxWithLabel(String text, String style, String messageId) {
         HBox hBox = new HBox();
         final Label label = new Label(text);
         hBox.getChildren().add(label);
-        label.setStyle(USER_STYLE);
-        hBox.setAlignment(Pos.BASELINE_RIGHT);
-        dialog.getChildren().add(hBox);
+        label.setStyle(style);
+        hBox.setAlignment(Pos.BASELINE_LEFT);
+
+        // Set the ID for the HBox
+        hBox.setId(messageId);
+
         hBox.setOnMouseClicked(e -> {
             dialog.getChildren().remove(hBox);
+            messageStorage.removeMessageById(messageId);
         });
-    
+
+        return hBox;
+    }
+
+
+    private String generateUniqueId() {
+        return UUID.randomUUID().toString();
+    }
+
+    private void replyToUser(final String text) {
+//        HBox hBox = createHBoxWithLabel(text, ELIZA_STYLE);
+//        dialog.getChildren().add(hBox);
+        String uniqueId = generateUniqueId();
+        messageStorage.addMessage(uniqueId, text, false);
+    }
+        
+    private void sendMessage(final String text) {
+//        HBox hBox = createHBoxWithLabel(text, USER_STYLE);
+//        dialog.getChildren().add(hBox);
+
+        String uniqueId = generateUniqueId();
+        messageStorage.addMessage(uniqueId, text, true);
+
         String reply = processor.processUserInput(text);
         replyToUser(reply);
     }

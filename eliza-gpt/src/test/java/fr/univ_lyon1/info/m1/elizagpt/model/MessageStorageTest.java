@@ -1,86 +1,66 @@
-package fr.univ_lyon1.info.m1.elizagpt.model;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
+import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+class MessageStorageTest implements MessageObserver {
 
-public class MessageStorageTest {
-
-    @Test
-    void testStoreMessage() {
-        // Given
-        MessageStorage messageStorage = new MessageStorage();
-
-        // When
-        messageStorage.storeMessage("Test message");
-
-        // Then
-        assertThat(messageStorage.getMessages(), contains("Test message"));
-    }
+    private boolean notified = false;
 
     @Test
     void testAddMessage() {
-        // Given
         MessageStorage messageStorage = new MessageStorage();
+        messageStorage.registerObserver(this);
 
-        // When
-        messageStorage.addMessage("Test message");
+        // Add a message
+        messageStorage.addMessage("1", "Hello", true);
 
-        // Then
-        assertThat(messageStorage.getMessages(), contains("Test message"));
+        // Check if the message is added
+        assertEquals(1, messageStorage.getMessages().size());
+
+        // Check if the observer is notified
+        assertTrue(notified);
     }
 
     @Test
-    void testGetMessages() {
-        // Given
+    void testRemoveMessageById() {
         MessageStorage messageStorage = new MessageStorage();
-        messageStorage.addMessage("Message 1");
-        messageStorage.addMessage("Message 2");
+        messageStorage.registerObserver(this);
 
-        // When
-        List<String> messages = messageStorage.getMessages();
+        // Add a message
+        messageStorage.addMessage("1", "Hello", true);
 
-        // Then
-        assertThat(messages, contains("Message 1", "Message 2"));
+        // Remove the message by ID
+        messageStorage.removeMessageById("1");
+
+        // Check if the message is removed
+        assertEquals(0, messageStorage.getMessages().size());
+
+        // Check if the observer is notified
+        assertTrue(notified);
     }
 
     @Test
-    void testRegisterObserver() {
-        // Given
+    void testRemoveMessagesByText() {
         MessageStorage messageStorage = new MessageStorage();
-        MessageObserver observer = new TestMessageObserver();
+        messageStorage.registerObserver(this);
 
-        // When
-        messageStorage.registerObserver(observer);
+        // Add two messages with the same text
+        messageStorage.addMessage("1", "Hello", true);
+        messageStorage.addMessage("2", "Hello", true);
 
-        // Then
-        assertThat(messageStorage.getObservers(), contains(observer));
+        // Remove messages by text
+        messageStorage.removeMessagesByText("Hello");
+
+        // Check if the messages are removed
+        assertEquals(0, messageStorage.getMessages().size());
+
+        // Check if the observer is notified
+        assertTrue(notified);
     }
 
-    @Test
-    void testRemoveObserver() {
-        // Given
-        MessageStorage messageStorage = new MessageStorage();
-        MessageObserver observer = new TestMessageObserver();
-        messageStorage.registerObserver(observer);
-
-        // When
-        messageStorage.removeObserver(observer);
-
-        // Then
-        assertThat(messageStorage.getObservers(), not(contains(observer)));
-    }
-
-
-    //class de test
-    private static class TestMessageObserver implements MessageObserver {
-        @Override
-        public void update() {
-            // Do nothing in this test observer
-        }
+    @Override
+    public void update(String notification) {
+        notified = true;
     }
 }

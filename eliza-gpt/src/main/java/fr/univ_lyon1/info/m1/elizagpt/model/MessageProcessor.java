@@ -14,7 +14,7 @@ public class MessageProcessor implements MessageObserver {
     private final Random random = new Random();
 
     @Override
-    public void update() {
+    public void update(String norification) {
         //TODO     
     }
 

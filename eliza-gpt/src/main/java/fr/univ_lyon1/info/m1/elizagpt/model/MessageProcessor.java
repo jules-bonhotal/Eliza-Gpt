@@ -27,6 +27,8 @@ public class MessageProcessor implements MessageObserver {
         this.messageStorage = messageStorage;
         this.messageStorage.registerObserver(this);
     }
+
+
     /**
      * Normlize the text: remove extra spaces, add a final dot if missing.
      * @param text
@@ -71,10 +73,10 @@ public class MessageProcessor implements MessageObserver {
 
         for (MessageStorage.Message message : messages) {
             String messageText = message.getMessageText();
-            Pattern pattern = Pattern.compile("Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
+            Pattern pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(messageText);
 
-            if (matcher.find()) {
+            if (matcher.matches()) {
                 return matcher.group(1);
             }
         }
@@ -152,27 +154,27 @@ public class MessageProcessor implements MessageObserver {
             return "Hmmm, hmm ...";
         }
         // Default answer
-        if (getName() != null) {//TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
+        if (getName() != null) {
             return "Qu'est-ce qui vous fait dire cela, " + getName() + " ?";
         } else {
             return "Qu'est-ce qui vous fait dire cela ?";
         }
     }
 
-        
 
     private String generateUniqueId() {
         return UUID.randomUUID().toString();
     }
+
 
     private void replyToUser(final String text) {
         String uniqueId = generateUniqueId();
         messageStorage.addMessage(uniqueId, text, false);
     }
         
+
     //TODO : voire si c'est vraimment bien de le mettre en public ou si c'est un truc a réglé en passant par le controller
     public void sendMessage(final String text) {
-        // TODO : bougée ce traitement dans message processeur sans doute
         String uniqueId = generateUniqueId();
         messageStorage.addMessage(uniqueId, text, true);
 

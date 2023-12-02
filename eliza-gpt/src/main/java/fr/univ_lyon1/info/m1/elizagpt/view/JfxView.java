@@ -63,8 +63,6 @@ public class JfxView implements MessageObserver {
 
         final Pane input = createInputWidget();
         root.getChildren().add(input);
-        // TODO : passer ca dans l'initialisation du message storage probablement
-        // processor.replyToUser("Bonjour");
 
         // Everything's ready: add it to the scene and display it
         final Scene scene = new Scene(root, width, height);
@@ -175,8 +173,6 @@ public class JfxView implements MessageObserver {
         //TODO: voire si il faut pas ecahper les chaaracter qui vont passer pour des regex, 
                 // genr si on chereche * ca cherche pas etoile mais tout les texte
 	    //TODO passer la recherche dans le model
-        //TODO: !!!!! faire en sorte que le controller et model ait aucune mention des 
-                //hBox et tout, le stockage devrait marcher de manière différente
         String normalizedText;		      
 		      
         Pattern pattern = Pattern.compile(text.getText(), Pattern.CASE_INSENSITIVE);
@@ -199,7 +195,7 @@ public class JfxView implements MessageObserver {
                     toDelete.add((HBox) hBox);
                 }
 /*                if (!t.contains(text.getText())) {
-                    // Can delete it right now, we're iterating over the list.
+                    // peut supprimer parce qu'on passs par une list maintentant
                     toDelete.add((HBox) hBox);
                 }*/
             }

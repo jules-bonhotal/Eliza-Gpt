@@ -70,11 +70,38 @@ public class MessageProcessorTest {
         MessageStorage messageStorage = new MessageStorage();
         MessageProcessor processor = new MessageProcessor(messageStorage);
 
+
+        
         assertThat(processor.processUserInput("Quel est mon nom ?"),
                 is("Je ne connais pas votre nom."));
 
         assertThat(processor.processUserInput("Je m'appelle Alice."),
                 is("Bonjour Alice."));
+        
+        // la fonction preocessUserInput ne rajoute pas les message dans le storage en lui meme
+        messageStorage.addMessage("1", "Je m'appelle Alice.", true);
+
+        assertThat(processor.getName(), is("Alice"));
+
+        assertThat(processor.processUserInput("Quel est mon nom ?"),
+                is("Votre nom est Alice."));
+    }
+
+
+    @Test
+    void testProcessUserInputRememberingNameLongerSentence() {
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor processor = new MessageProcessor(messageStorage);
+
+        assertThat(processor.processUserInput("Quel est mon nom ?"),
+                is("Je ne connais pas votre nom."));
+
+        assertThat(processor.processUserInput("Tu sais Je m'appelle Alice."),
+                is("Bonjour Alice."));
+
+        // la fonction preocessUserInput ne rajoute pas les message dans le storage en lui meme
+        messageStorage.addMessage("1", "Je m'appelle Alice.", true);
+
 
         assertThat(processor.getName(), is("Alice"));
 

@@ -11,6 +11,10 @@ public class MessageStorage {
     private List<MessageObserver> observers = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
 
+    public MessageStorage() {
+        addMessage("0", "Bonjour!", false);
+    }
+
     public void addMessage(String messageId, String messageText, boolean isUser) {
         Message message = new Message(messageId, messageText, isUser);
         messages.add(message);

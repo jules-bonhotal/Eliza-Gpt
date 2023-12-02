@@ -96,12 +96,10 @@ public class MessageProcessor implements MessageObserver {
         Pattern pattern;
         Matcher matcher;
     
-        /*toute cette partie devrait etre dans le model*/
         // First, try to answer specifically to what the user said
         pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) {
-            // replyToUser("Bonjour " + matcher.group(1) + ".");
             return "Bonjour " + matcher.group(1) + ".";
         }
 
@@ -109,19 +107,14 @@ public class MessageProcessor implements MessageObserver {
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) {
              if (getName() != null) {
-                 // replyToUser("Votre nom est " + getName() + ".");
                  return "Votre nom est " + getName() + ".";
              } else {
                 return "Je ne connais pas votre nom.";
-//                 replyToUser("Je ne connais pas votre nom.");
              }
-            // return;
         }
         pattern = Pattern.compile("Qui est le plus (.*) \\?", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) {
-            // replyToUser("Le plus " + matcher.group(1)
-            //             + " est bien sûr votre enseignant de MIF01 !");
             return "Le plus " + matcher.group(1) + " est bien sûr votre enseignant de MIF01 !";
         }
         pattern = Pattern.compile("(Je .*)\\.", Pattern.CASE_INSENSITIVE);
@@ -132,7 +125,6 @@ public class MessageProcessor implements MessageObserver {
                 "Pourquoi pensez-vous que ",
                 "Êtes-vous sûr que ",
             });
-            // replyToUser(startQuestion + processor.firstToSecondPerson(matcher.group(1)) + " ?");
             return startQuestion + firstToSecondPerson(matcher.group(1)) + " ?";
         }
         pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
@@ -142,7 +134,6 @@ public class MessageProcessor implements MessageObserver {
                     "Ici, c'est moi qui pose les questions. ",
                     "Je vous renvoie la question. ",
             });
-            // replyToUser(reponse);
             return reponse;
         }
 
@@ -152,25 +143,20 @@ public class MessageProcessor implements MessageObserver {
 
         // Nothing clever to say, answer randomly
         if (random.nextBoolean()) {
-            // replyToUser("Il faut beau aujourd'hui, vous ne trouvez pas ?");
             return "Il faut beau aujourd'hui, vous ne trouvez pas ?";
         }
         if (random.nextBoolean()) {
-            // replyToUser("Je ne comprends pas.");
             return "Je ne comprends pas.";
         }
         if (random.nextBoolean()) {
-            // replyToUser("Hmmm, hmm ...");
             return "Hmmm, hmm ...";
         }
         // Default answer
-        // if (getName() != null) {//TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
-            // replyToUser("Qu'est-ce qui vous fait dire cela, " + getName() + " ?");
-            // return "Qu'est-ce qui vous fait dire cela, " + getName() + " ?";
-        // } else {
-            // replyToUser("Qu'est-ce qui vous fait dire cela ?");
+        if (getName() != null) {//TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
+            return "Qu'est-ce qui vous fait dire cela, " + getName() + " ?";
+        } else {
             return "Qu'est-ce qui vous fait dire cela ?";
-        // }
+        }
     }
 
         

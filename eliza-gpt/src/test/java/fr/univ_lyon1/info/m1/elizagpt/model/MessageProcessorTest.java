@@ -63,6 +63,8 @@ public class MessageProcessorTest {
                 is("Qu'est-ce qui vous fait dire cela ?")));
     }
 
+
+
     @Test
     void testProcessUserInputRememberingName() {
         MessageStorage messageStorage = new MessageStorage();
@@ -74,7 +76,36 @@ public class MessageProcessorTest {
         assertThat(processor.processUserInput("Je m'appelle Alice."),
                 is("Bonjour Alice."));
 
+        assertThat(processor.getName(), is("Alice"));
+
         assertThat(processor.processUserInput("Quel est mon nom ?"),
                 is("Votre nom est Alice."));
+    }
+
+
+    @Test
+    void testGetName() {
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor processor = new MessageProcessor(messageStorage);
+
+        // Test case: No messages in the storage
+        assertThat(processor.getName(), is(nullValue()));
+
+        // Test case: Name found in a single message
+        messageStorage.addMessage("1", "Je m'appelle Alice.", true);
+        assertThat(processor.getName(), is("Alice"));
+
+        // Test case: Name found in multiple messages, return the first one
+        messageStorage.addMessage("2", "Je m'appelle Bob.", true);
+        messageStorage.addMessage("3", "Je m'appelle Carol.", true);
+        assertThat(processor.getName(), is("Alice"));
+
+        // Test case: Name not found
+        messageStorage.removeMessagesByText(".*Je m'appelle(.)*");
+        assertThat(processor.getName(), is(nullValue()));
+
+        // Test case: Case-insensitive matching
+        messageStorage.addMessage("4", "Je M'appelle Dave.", true);
+        assertThat(processor.getName(), is("Dave"));
     }
 }

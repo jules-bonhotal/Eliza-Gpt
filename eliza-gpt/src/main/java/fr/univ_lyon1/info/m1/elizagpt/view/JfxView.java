@@ -63,7 +63,8 @@ public class JfxView implements MessageObserver {
 
         final Pane input = createInputWidget();
         root.getChildren().add(input);
-        replyToUser("Bonjour");
+        // TODO : passer ca dans l'initialisation du message storage probablement
+        // processor.replyToUser("Bonjour");
 
         // Everything's ready: add it to the scene and display it
         final Scene scene = new Scene(root, width, height);
@@ -110,7 +111,7 @@ public class JfxView implements MessageObserver {
         hBox.setAlignment(Pos.BASELINE_LEFT);
 
         // Attribue un identifiant unique à la HBox pour distingué deux messages avec un texte identique dans le messgaeStorage
-        String uniqueId = generateUniqueId();
+        String uniqueId = UUID.randomUUID().toString();
         hBox.setId(uniqueId);
 
         hBox.setOnMouseClicked(e -> {
@@ -140,50 +141,9 @@ public class JfxView implements MessageObserver {
     }
 
 
-    private String generateUniqueId() {
-        return UUID.randomUUID().toString();
-    }
 
-    private void replyToUser(final String text) {
-//        HBox hBox = createHBoxWithLabel(text, ELIZA_STYLE);
-//        dialog.getChildren().add(hBox);
-        String uniqueId = generateUniqueId();
-        messageStorage.addMessage(uniqueId, text, false);
-    }
-        
-    private void sendMessage(final String text) {
-//        HBox hBox = createHBoxWithLabel(text, USER_STYLE);
-//        dialog.getChildren().add(hBox);
 
-        String uniqueId = generateUniqueId();
-        messageStorage.addMessage(uniqueId, text, true);
-
-        String reply = processor.processUserInput(text);
-        replyToUser(reply);
-    }
-
-    /**
-    * Extract the name of the user from the dialog.
-    * TODO: this totally breaks the MVC pattern, never, ever, EVER do that.
-    * @return
-    */
-    private String getName() {
-        for (Node hBox : dialog.getChildren()) {
-            for (Node label : ((HBox) hBox).getChildren()) {
-                if (((Label) label).getStyle().equals("-fx-background-color: #A0E0A0;")) {
-                    String text = ((Label) label).getText();
-                    Pattern pattern = Pattern.compile("Je m'appelle (.*)\\.",
-                                                      Pattern.CASE_INSENSITIVE);
-                    Matcher matcher = pattern.matcher(text);
-                    if (matcher.matches()) {
-                        return matcher.group(1);
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
+    // TODO : passer la recherche par le message Storage
     private Pane createSearchWidget() {
         final HBox firstLine = new HBox();
         final HBox secondLine = new HBox();
@@ -266,12 +226,14 @@ public class JfxView implements MessageObserver {
         final Pane input = new HBox();
         text = new TextField();
         text.setOnAction(e -> {
-            sendMessage(text.getText());
+            // TODO : voire si il faut pas que ca passe par le contoller 
+            processor.sendMessage(text.getText());
             text.setText("");
         });
         final Button send = new Button("Send");
         send.setOnAction(e -> {
-            sendMessage(text.getText());
+            // TODO : voire si il faut pas que ca passe par le contoller 
+            processor.sendMessage(text.getText());
             text.setText("");
         });
         input.getChildren().addAll(text, send);

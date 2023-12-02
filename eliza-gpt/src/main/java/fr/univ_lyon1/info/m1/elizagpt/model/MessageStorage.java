@@ -3,6 +3,8 @@ package fr.univ_lyon1.info.m1.elizagpt.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MessageStorage {
@@ -27,16 +29,21 @@ public class MessageStorage {
         }
     }
 
-    public void removeMessagesByText(String searchText) {
+    public void removeMessagesByText(String regexPattern) {
         Iterator<Message> iterator = messages.iterator();
         boolean wasAMessageRemoved = false;
+        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
         while (iterator.hasNext()) {
             Message message = iterator.next();
-            if (message.getMessageText().equals(searchText)) {
+            Matcher matcher = pattern.matcher(message.getMessageText());
+
+            if (matcher.find()) {
                 iterator.remove();
                 wasAMessageRemoved = true;
             }
         }
+
         if (wasAMessageRemoved) {
             notifyObservers("removed-");
         }

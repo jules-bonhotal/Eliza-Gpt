@@ -1,7 +1,11 @@
 package fr.univ_lyon1.info.m1.elizagpt.model;
 
+
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +61,28 @@ public class MessageProcessor implements MessageObserver {
         }
     }
 
+
+    /**
+     * Extract the name of the user from the dialog.
+     * @return
+     */
+    protected String getName() {
+        List<MessageStorage.Message> messages = messageStorage.getMessages();
+
+        for (MessageStorage.Message message : messages) {
+            String messageText = message.getMessageText();
+            Pattern pattern = Pattern.compile("Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(messageText);
+
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        }
+
+        return null;
+    }
+
+
     /**
      * Processes user input and generates a response based on predefined patterns.
      *
@@ -81,14 +107,14 @@ public class MessageProcessor implements MessageObserver {
 
         pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) { //TODO FAIRE LA PARTIE ENREGISTREMENT DU NOM
-            // if (getName() != null) {
-            //     // replyToUser("Votre nom est " + getName() + ".");
-            //     return "Votre nom est " + getName() + ".";
-            // } else {
+        if (matcher.matches()) {
+             if (getName() != null) {
+                 // replyToUser("Votre nom est " + getName() + ".");
+                 return "Votre nom est " + getName() + ".";
+             } else {
                 return "Je ne connais pas votre nom.";
-                // replyToUser("Je ne connais pas votre nom.");
-            // }
+//                 replyToUser("Je ne connais pas votre nom.");
+             }
             // return;
         }
         pattern = Pattern.compile("Qui est le plus (.*) \\?", Pattern.CASE_INSENSITIVE);
@@ -123,6 +149,7 @@ public class MessageProcessor implements MessageObserver {
 
 
 
+
         // Nothing clever to say, answer randomly
         if (random.nextBoolean()) {
             // replyToUser("Il faut beau aujourd'hui, vous ne trouvez pas ?");
@@ -146,6 +173,26 @@ public class MessageProcessor implements MessageObserver {
         // }
     }
 
+        
+
+    private String generateUniqueId() {
+        return UUID.randomUUID().toString();
+    }
+
+    private void replyToUser(final String text) {
+        String uniqueId = generateUniqueId();
+        messageStorage.addMessage(uniqueId, text, false);
+    }
+        
+    //TODO : voire si c'est vraimment bien de le mettre en public ou si c'est un truc a réglé en passant par le controller
+    public void sendMessage(final String text) {
+        // TODO : bougée ce traitement dans message processeur sans doute
+        String uniqueId = generateUniqueId();
+        messageStorage.addMessage(uniqueId, text, true);
+
+        String reply = processUserInput(text);
+        replyToUser(reply);
+    }
 
 
 

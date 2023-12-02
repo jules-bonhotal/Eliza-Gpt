@@ -1,7 +1,8 @@
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MessageStorageTest implements MessageObserver {
 
@@ -64,7 +65,7 @@ class MessageStorageTest implements MessageObserver {
         // Check if the messages are removed
         assertEquals(1, messageStorage.getMessages().size());
 
-        
+
         // Remove the "Bonjour" message by ID
         messageStorage.removeMessageById("0");
 
@@ -77,7 +78,7 @@ class MessageStorageTest implements MessageObserver {
     }
 
     @Override
-    public void update(String notification) {
+    public void update(final String notification) {
         notified = true;
     }
 }

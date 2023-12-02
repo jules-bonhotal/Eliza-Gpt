@@ -39,7 +39,10 @@ public class JfxView implements MessageObserver {
     /**
      * Create the main view of the application.
      */
-    public JfxView(final Stage stage, final int width, final int height, MessageStorage messageStorage) {
+    public JfxView(final Stage stage,
+            final int width,
+            final int height,
+            final MessageStorage messageStorage) {
         //s'ajoute en temps qu'observer du stockage des message pour etre notifier des changements
         this.messageStorage = messageStorage;
         messageStorage.registerObserver(this);
@@ -72,7 +75,13 @@ public class JfxView implements MessageObserver {
     }
 
 
-    public void update(String notification) {
+    /**
+     * Updates the graphical interface based on the notification received.
+     *
+     * @param notification The notification string indicating the type of update.
+     */
+
+    public void update(final String notification) {
         // Clear existing HBox elements
         dialog.getChildren().clear();
 
@@ -83,9 +92,13 @@ public class JfxView implements MessageObserver {
         for (MessageStorage.Message message : messages) {
             HBox hBox;
             if (message.isUserMessage()) {
-                hBox = createHBoxWithLabel(message.getMessageText(), USER_STYLE, message.getMessageId());
+                hBox = createHBoxWithLabel(message.getMessageText(),
+                            USER_STYLE,
+                            message.getMessageId());
             } else {
-                hBox = createHBoxWithLabel(message.getMessageText(), ELIZA_STYLE, message.getMessageId());
+                hBox = createHBoxWithLabel(message.getMessageText(),
+                            ELIZA_STYLE,
+                            message.getMessageId());
             }
             dialog.getChildren().add(hBox);
         }
@@ -101,14 +114,15 @@ public class JfxView implements MessageObserver {
     static final String ELIZA_STYLE = "-fx-background-color: #A0A0E0; " + BASE_STYLE;
 
     //factorise la creation des hbox
-    private HBox createHBoxWithLabel(String text, String style) {
+    private HBox createHBoxWithLabel(final String text, final String style) {
         HBox hBox = new HBox();
         final Label label = new Label(text);
         hBox.getChildren().add(label);
         label.setStyle(style);
         hBox.setAlignment(Pos.BASELINE_LEFT);
 
-        // Attribue un identifiant unique à la HBox pour distingué deux messages avec un texte identique dans le messgaeStorage
+        // Attribue un identifiant unique à la HBox pour distingué deux messages avec un 
+        // texte identique dans le messageStorage
         String uniqueId = UUID.randomUUID().toString();
         hBox.setId(uniqueId);
 
@@ -120,7 +134,9 @@ public class JfxView implements MessageObserver {
         return hBox;
     }
 
-    private HBox createHBoxWithLabel(String text, String style, String messageId) {
+    private HBox createHBoxWithLabel(final String text,
+                final String style,
+                final String messageId) {
         HBox hBox = new HBox();
         final Label label = new Label(text);
         hBox.getChildren().add(label);

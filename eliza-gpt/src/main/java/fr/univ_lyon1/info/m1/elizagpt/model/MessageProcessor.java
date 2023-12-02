@@ -18,12 +18,18 @@ public class MessageProcessor implements MessageObserver {
     private final Random random = new Random();
 
     @Override
-    public void update(String norification) {
+    public void update(final String norification) {
         //TODO     
     }
 
 
-    public MessageProcessor(MessageStorage messageStorage) {
+    /**
+     * Constructs a MessageProcessor by copying a specified MessageStorage.
+     * 
+     * @param messageStorage The MessageStorage to be copied with the MessageProcessor.
+     */
+
+    public MessageProcessor(final MessageStorage messageStorage) {
         this.messageStorage = messageStorage;
         this.messageStorage.registerObserver(this);
     }
@@ -173,7 +179,16 @@ public class MessageProcessor implements MessageObserver {
     }
         
 
-    //TODO : voire si c'est vraimment bien de le mettre en public ou si c'est un truc a réglé en passant par le controller
+
+
+
+    /**
+     * Sends a user message to the message storage.
+     *
+     * @param text The user input message to be sent and processed.
+     */
+    // TODO : voire si c'est vraimment bien de le mettre en public ou si c'est un truc a 
+    // réglé en passant par le controller
     public void sendMessage(final String text) {
         String uniqueId = generateUniqueId();
         messageStorage.addMessage(uniqueId, text, true);

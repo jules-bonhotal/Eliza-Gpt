@@ -2,7 +2,12 @@ package fr.univ_lyon1.info.m1.elizagpt.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -14,7 +19,7 @@ public class MessageProcessorTest {
     void testFirstToSecondPerson() {
         // Given
         MessageStorage messageStorage = new MessageStorage();
-        MessageProcessor p = new MessageProcessor(messageStorage );
+        MessageProcessor p = new MessageProcessor(messageStorage);
 
 
         // Then

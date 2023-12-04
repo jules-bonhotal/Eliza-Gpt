@@ -79,6 +79,26 @@ public class MessageStorage {
     }
 
     /**
+     * Find messages in the storage that match the given regular expression.
+     *
+     * @param regexPattern The regular expression pattern to match.
+     * @return A list of messages that match the given regular expression.
+     */
+    public List<Message> findMessagesByRegex(final String regexPattern) {
+        List<Message> matchingMessages = new ArrayList<>();
+        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
+        for (Message message : messages) {
+            Matcher matcher = pattern.matcher(message.getMessageText());
+            if (matcher.find()) {
+                matchingMessages.add(message);
+            }
+        }
+
+        return matchingMessages;
+    }
+
+    /**
      * Retrieves a copy of the list of messages stored in the MessageStorage.
      *
      * @return A list of Message objects.

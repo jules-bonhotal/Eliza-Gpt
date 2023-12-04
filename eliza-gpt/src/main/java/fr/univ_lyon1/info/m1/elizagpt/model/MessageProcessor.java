@@ -98,6 +98,7 @@ public class MessageProcessor implements MessageObserver {
      * @return A generated response based on the analyzed patterns in the user input.
      */
 
+// TODO : a revoir pour que ce soit pas une suite de if else et implementer un pattern
     public String processUserInput(final String text) {
         String normalizedText = normalize(text);
     

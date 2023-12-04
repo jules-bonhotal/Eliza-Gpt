@@ -1,6 +1,6 @@
 package fr.univ_lyon1.info.m1.elizagpt.view;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +10,7 @@ import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 // import fr.univ_lyon1.info.m1.elizagpt.model.processUserInput;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
+// import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,8 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+// import java.util.regex.Matcher;
+// import java.util.regex.Pattern;
 import java.util.Random;
 
 
@@ -157,7 +157,6 @@ public class JfxView implements MessageObserver {
 
 
 
-    // TODO : passer la recherche par le message Storage
     private Pane createSearchWidget() {
         final HBox firstLine = new HBox();
         final HBox secondLine = new HBox();
@@ -165,19 +164,25 @@ public class JfxView implements MessageObserver {
         secondLine.setAlignment(Pos.BASELINE_LEFT);
         searchText = new TextField();
         searchText.setOnAction(e -> {
-            searchText(searchText);
+            String regexPattern = searchText.getText();
+            List<MessageStorage.Message> matchingMessages =
+                messageStorage.findMessagesByRegex(regexPattern);
+            updateSearchResults(matchingMessages);
         });
         firstLine.getChildren().add(searchText);
         final Button send = new Button("Search");
         send.setOnAction(e -> {
-            searchText(searchText);
+            String regexPattern = searchText.getText();
+            List<MessageStorage.Message> matchingMessages =
+                messageStorage.findMessagesByRegex(regexPattern);
+            updateSearchResults(matchingMessages);
         });
         searchTextLabel = new Label();
         final Button undo = new Button("Undo search");
-        undo.setOnAction(e -> {
-            throw new UnsupportedOperationException("TODO: implement undo for search");
-        });
-        secondLine.getChildren().addAll(send, searchTextLabel, undo);
+        // undo.setOnAction(e -> {
+        //     // TODO: implement undo for search
+        // });
+        secondLine.getChildren().addAll(send, searchTextLabel); //, undo);
         final VBox input = new VBox();
         input.getChildren().addAll(firstLine, secondLine);
         return input;
@@ -185,40 +190,34 @@ public class JfxView implements MessageObserver {
 
 
 
-    private void searchText(final TextField text) {
-        //TODO: voire si il faut pas ecahper les chaaracter qui vont passer pour des regex, 
-                // genr si on chereche * ca cherche pas etoile mais tout les texte
-	    //TODO passer la recherche dans le model
-        String normalizedText;		      
-		      
-        Pattern pattern = Pattern.compile(text.getText(), Pattern.CASE_INSENSITIVE);
-        Matcher matcher;
-    	
-    	
-        String currentSearchText = text.getText();
-        if (currentSearchText == null) {
+    // update the search results in the View
+    private void updateSearchResults(final List<MessageStorage.Message> matchingMessages) {
+        dialog.getChildren().clear();
+
+        for (MessageStorage.Message message : matchingMessages) {
+            HBox hBox;
+            if (message.isUserMessage()) {
+                hBox = createHBoxWithLabel(message.getMessageText(),
+                        USER_STYLE,
+                        message.getMessageId());
+            } else {
+                hBox = createHBoxWithLabel(message.getMessageText(),
+                        ELIZA_STYLE,
+                        message.getMessageId());
+            }
+            dialog.getChildren().add(hBox);
+        }
+
+        // Update the search label
+        String currentSearchText = searchText.getText();
+        if (currentSearchText == null || currentSearchText.isEmpty()) {
             searchTextLabel.setText("No active search");
         } else {
             searchTextLabel.setText("Searching for: " + currentSearchText);
         }
-        List<HBox> toDelete = new ArrayList<>();
-        for (Node hBox : dialog.getChildren()) {
-            for (Node label : ((HBox) hBox).getChildren()) {
-                String t = ((Label) label).getText();
-                normalizedText = processor.normalize(t);
-        		    matcher = pattern.matcher(normalizedText);
-                if (!matcher.find()) {                  
-                    toDelete.add((HBox) hBox);
-                }
-/*                if (!t.contains(text.getText())) {
-                    // peut supprimer parce qu'on passs par une list maintentant
-                    toDelete.add((HBox) hBox);
-                }*/
-            }
-        }
-        dialog.getChildren().removeAll(toDelete);
-        text.setText("");
     }
+
+
 
 
 /**

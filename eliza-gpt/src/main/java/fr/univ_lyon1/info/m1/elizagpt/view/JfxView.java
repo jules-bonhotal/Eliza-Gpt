@@ -23,7 +23,10 @@ import javafx.stage.Stage;
 // import java.util.regex.Matcher;
 // import java.util.regex.Pattern;
 import java.util.Random;
-
+// import javafx.scene.control.ChoiceBox;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
 
 /**
  * Main class of the View (GUI) of the application.
@@ -157,26 +160,66 @@ public class JfxView implements MessageObserver {
 
 
 
+
     private Pane createSearchWidget() {
         final HBox firstLine = new HBox();
         final HBox secondLine = new HBox();
         firstLine.setAlignment(Pos.BASELINE_LEFT);
         secondLine.setAlignment(Pos.BASELINE_LEFT);
+
+        // Create a ComboBox for search options
+        ObservableList<String> searchOptions = FXCollections.observableArrayList(
+                "Option 1", "Option 2" // TODO : ajouter des vrai option de recherches
+        );
+        ComboBox<String> searchOptionsComboBox = new ComboBox<>(searchOptions);
+        searchOptionsComboBox.setPromptText("Select Search Option");
+
         searchText = new TextField();
         searchText.setOnAction(e -> {
+            String selectedOption = searchOptionsComboBox.getValue();
             String regexPattern = searchText.getText();
+
+            // Perform different actions based on the selected search option
+            switch (selectedOption) {
+                case "Option 1":
+                    // Perform search logic for Option 1
+                    break;
+                case "Option 2":
+                    // Perform search logic for Option 2
+                    break;
+                default:
+                    break;
+            }
+
             List<MessageStorage.Message> matchingMessages =
                 messageStorage.findMessagesByRegex(regexPattern);
             updateSearchResults(matchingMessages);
         });
-        firstLine.getChildren().add(searchText);
+
+        firstLine.getChildren().addAll(searchText, searchOptionsComboBox);
         final Button send = new Button("Search");
         send.setOnAction(e -> {
+            String selectedOption = searchOptionsComboBox.getValue();
             String regexPattern = searchText.getText();
+
+            // Perform different actions based on the selected search option
+            switch (selectedOption) {
+                case "Option 1":
+                    // Perform search logic 1
+                    break;
+                case "Option 2":
+                    // Perform search logic 2
+                    break;
+                default:
+                    // Default search logic
+                    break;
+            }
+
             List<MessageStorage.Message> matchingMessages =
                 messageStorage.findMessagesByRegex(regexPattern);
             updateSearchResults(matchingMessages);
         });
+
         searchTextLabel = new Label();
         final Button undo = new Button("Undo search");
         // undo.setOnAction(e -> {

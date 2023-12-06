@@ -19,7 +19,7 @@ public class App extends Application {
 
         new JfxView(stage, 600, 600, messageStorage);
         // Second view (uncomment to activate)
-        new JfxView(new Stage(), 400, 400, messageStorage);
+        new JfxView(new Stage(), 900, 900, messageStorage);
         
     }
 

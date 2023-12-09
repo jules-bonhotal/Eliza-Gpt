@@ -26,13 +26,13 @@ public interface SearchStrategy {
                 MessageStorage messageStorage);
 
 
-    /**
-     * Returns the name of the search option.
-     * Used to avoid using magic numbers in UI components.
-     *
-     * @return The name of the search option.
-     */
-    String getOptionName();
+    // /**
+    //  * Returns the name of the search option.
+    //  * Used to avoid using magic numbers in UI components.
+    //  *
+    //  * @return The name of the search option.
+    //  */
+    // String getOptionName();
 
     /**
      * Returns a string representation of the search option.
@@ -40,9 +40,8 @@ public interface SearchStrategy {
      *
      * @return A string representation of the search option.
      */
-    default String toStringOption() {
-        return getOptionName();
-    }
+    @Override
+    public String toString();
 }
 
 

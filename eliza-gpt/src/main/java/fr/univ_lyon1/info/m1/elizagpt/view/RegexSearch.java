@@ -51,7 +51,8 @@ public class RegexSearch implements SearchStrategy {
      * @return The name of the search option.
      */
     @Override
-    public String getOptionName() {
+    public String toString() {
         return "RegexSearch";
     }
+    
 }

@@ -60,7 +60,7 @@ public class Option2Search implements SearchStrategy {
      * @return The name of the search option.
      */
     @Override
-    public String getOptionName() {
+    public String toString() {
         return "Option 2";
     }
 }

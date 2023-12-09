@@ -3,7 +3,7 @@ package fr.univ_lyon1.info.m1.elizagpt.view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.Collections;
+// import java.util.Collections;
 
 
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
@@ -162,112 +162,6 @@ public class JfxView implements MessageObserver {
 
 
 
-    // Interface pour les stratégies de recherche
-    // implement le patern Strategie
-    /**
-     * Interface defining a search strategy for message retrieval.
-     * Implementations of this interface define specific search logic
-     * and provide a way to identify the search option.
-     */
-    public interface SearchStrategy {
-
-        /**
-         * Executes the search based on the given search query and
-         * the message storage.
-         *
-         * @param searchQuery The query string for the search.
-         * @param messageStorage The storage containing messages.
-         * @return A list of messages matching the search criteria.
-         */
-        List<MessageStorage.Message> executeSearch(
-                    String searchQuery,
-                    MessageStorage messageStorage);
-
-
-        /**
-         * Returns the name of the search option.
-         * Used to avoid using magic numbers in UI components.
-         *
-         * @return The name of the search option.
-         */
-        String getOptionName();
-
-        // static ObservableList<SearchStrategy> getStrategies() {
-        //     return  FXCollections.observableArrayList(
-        //                 new RegexSearch(), new Option2Search()
-        //             );
-        // }
-
-
-        //TODO VOIRE SI LE PROBLEME D
-        /**
-         * Returns a string representation of the search option.
-         * By default, it is the same as the option name.
-         *
-         * @return A string representation of the search option.
-         */
-        default String toStringOption() {
-            return getOptionName();
-        }
-    }
-
-
-
-    /**
-     * Implementation of the SearchStrategy interface
-     * for searching messages using a regular expression.
-     */
-    public class RegexSearch implements SearchStrategy {
-        @Override
-        public List<MessageStorage.Message> executeSearch(
-                final String searchQuery,
-                final MessageStorage messageStorage) {
-            // Logique de recherche pour l'option 1
-            return messageStorage.findMessagesByRegex(searchQuery);
-        }
-
-        /**
-         * Returns the name of the search option.
-         *
-         * @return The name of the search option.
-         */
-        @Override
-        public String getOptionName() {
-            return "RegexSearch";
-        }
-    }
-
-
-    /**
-     * Implementation of the {@link SearchStrategy} interface
-     * for a placeholder/search strategy (Option 2).
-     */
-    public class Option2Search implements SearchStrategy {
-        /**
-         * Executes a placeholder search strategy.
-         * This implementation returns an empty list.
-         *
-         * @param searchQuery The search query (not used).
-         * @param messageStorage The storage containing messages (not used).
-         * @return An empty list, indicating no messages found.
-         */
-        @Override
-        public List<MessageStorage.Message> executeSearch(
-                    final String searchQuery,
-                    final MessageStorage messageStorage) {
-            return new ArrayList<>(); // temporary
-        }
-
-        /**
-         * Returns the name of the search option.
-         *
-         * @return The name of the search option.
-         */
-        @Override
-        public String getOptionName() {
-            return "Option 2";
-        }
-    }
 
     private Pane createSearchWidget() {
         final HBox firstLine = new HBox();
@@ -275,14 +169,13 @@ public class JfxView implements MessageObserver {
         firstLine.setAlignment(Pos.BASELINE_LEFT);
         secondLine.setAlignment(Pos.BASELINE_LEFT);
 
+
         // Create a ComboBox for search options
-        ArrayList<SearchStrategy> searchOptions = new ArrayList<>();
-        // TODO trouvee u moyen d'avoir une fonction qui retourn
-        // la liste au lieu d'ajouter les strategies a la main
-        Collections.addAll(searchOptions, new RegexSearch(), new Option2Search());
+        SearchStrategyList searchStrategyList = new SearchStrategyList();
+        ArrayList<SearchStrategy> searchOptions = searchStrategyList.getList();
 
         ComboBox<SearchStrategy> searchOptionsComboBox = 
-                new ComboBox<SearchStrategy>(FXCollections.observableArrayList(searchOptions));
+                new ComboBox<>(FXCollections.observableArrayList(searchOptions));
         searchOptionsComboBox.setPromptText("Select Search Option");
 
         searchText = new TextField();
@@ -351,6 +244,8 @@ public class JfxView implements MessageObserver {
             searchTextLabel.setText("Searching for: " + currentSearchText);
         }
     }
+
+
 
 
 

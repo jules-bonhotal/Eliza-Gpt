@@ -117,45 +117,35 @@ public class JfxView implements MessageObserver {
     static final String USER_STYLE = "-fx-background-color: #A0E0A0; " + BASE_STYLE;
     static final String ELIZA_STYLE = "-fx-background-color: #A0A0E0; " + BASE_STYLE;
 
-    //factorise la creation des hbox
-    private HBox createHBoxWithLabel(final String text, final String style) {
-        HBox hBox = new HBox();
-        final Label label = new Label(text);
-        hBox.getChildren().add(label);
-        label.setStyle(style);
-        hBox.setAlignment(Pos.BASELINE_LEFT);
-
-        // Attribue un identifiant unique à la HBox pour distingué deux messages avec un 
-        // texte identique dans le messageStorage
-        String uniqueId = UUID.randomUUID().toString();
-        hBox.setId(uniqueId);
-
-        hBox.setOnMouseClicked(e -> {
-            dialog.getChildren().remove(hBox);
-            messageStorage.removeMessageById(hBox.getId());
-        });
-
-        return hBox;
-    }
-
+    // Factorize the creation of HBox with label and button
     private HBox createHBoxWithLabel(final String text,
-                final String style,
-                final String messageId) {
-        HBox hBox = new HBox();
+            final String style,
+            final String messageId) {
+        HBox outerHBox = new HBox();
+        outerHBox.setAlignment(Pos.BASELINE_LEFT);
+
+        HBox innerHBox = new HBox();
         final Label label = new Label(text);
-        hBox.getChildren().add(label);
-        label.setStyle(style);
-        hBox.setAlignment(Pos.BASELINE_LEFT);
+        final Button deleteButton = new Button("x");
+        innerHBox.getChildren().addAll(label, deleteButton);
+        innerHBox.setAlignment(Pos.BASELINE_LEFT);
+        innerHBox.setStyle(style);
 
-        // Set the ID for the HBox
-        hBox.setId(messageId);
+        outerHBox.getChildren().add(innerHBox);
 
-        hBox.setOnMouseClicked(e -> {
-            dialog.getChildren().remove(hBox);
+        outerHBox.setId(messageId);
+
+        deleteButton.setOnAction(e -> {
+            dialog.getChildren().remove(outerHBox);
             messageStorage.removeMessageById(messageId);
         });
 
-        return hBox;
+        return outerHBox;
+    }
+
+    private HBox createHBoxWithLabel(final String text, final String style) {
+        String uniqueId = UUID.randomUUID().toString();
+        return createHBoxWithLabel(text, style, uniqueId);
     }
 
 

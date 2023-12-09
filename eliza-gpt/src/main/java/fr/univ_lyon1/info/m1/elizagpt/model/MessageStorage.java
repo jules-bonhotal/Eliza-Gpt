@@ -78,6 +78,11 @@ public class MessageStorage {
         }
     }
 
+
+    // TODO : voir si on peut factoriser du code pour les differents strategies 
+    // mais ca a sans doute a voir avec le fait de passer le pattern strategie 
+    // dans le model
+
     /**
      * Find messages in the storage that match the given regular expression.
      *
@@ -87,6 +92,46 @@ public class MessageStorage {
     public List<Message> findMessagesByRegex(final String regexPattern) {
         List<Message> matchingMessages = new ArrayList<>();
         Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+
+        for (Message message : messages) {
+            Matcher matcher = pattern.matcher(message.getMessageText());
+            if (matcher.find()) {
+                matchingMessages.add(message);
+            }
+        }
+
+        return matchingMessages;
+    }
+
+
+    /**
+     * Finds messages in the storage that contain the specified substring.
+     *
+     * @param substring The substring to search for.
+     * @return A list of messages containing the specified substring.
+     */
+    public List<Message> findMessagesBySubstring(final String substring) {
+        List<Message> matchingMessages = new ArrayList<>();
+
+        for (Message message : messages) {
+            if (message.getMessageText().contains(substring)) {
+                matchingMessages.add(message);
+            }
+        }
+
+        return matchingMessages;
+    }
+
+
+    /**
+     * Finds messages in the storage that contain complete words matching the specified query.
+     *
+     * @param word The word to search for.
+     * @return A list of messages containing complete words matching the specified query.
+     */
+    public List<Message> findMessagesByWord(final String word) {
+        List<Message> matchingMessages = new ArrayList<>();
+        Pattern pattern = Pattern.compile("\\b" + word + "\\b", Pattern.CASE_INSENSITIVE);
 
         for (Message message : messages) {
             Matcher matcher = pattern.matcher(message.getMessageText());

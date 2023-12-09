@@ -111,6 +111,30 @@ class MessageStorageTest implements MessageObserver {
     }
 
 
+    @Test
+    void findMessagesBySubstring() {
+        MessageStorage storage = new MessageStorage();
+        storage.addMessage("1", "Hello, how are you?", false);
+        storage.addMessage("2", "I'm doing well, thank you!", true);
+
+        List<MessageStorage.Message> result = storage.findMessagesBySubstring("well");
+
+        assertEquals(1, result.size());
+        assertEquals("I'm doing well, thank you!", result.get(0).getMessageText());
+    }
+
+
+    @Test
+    void findMessagesByWord() {
+        MessageStorage storage = new MessageStorage();
+        storage.addMessage("1", "Hello, how are you?", false);
+        storage.addMessage("2", "I'm doing well, thank you!", true);
+
+        List<MessageStorage.Message> result = storage.findMessagesByWord("well");
+
+        assertEquals(1, result.size());
+        assertEquals("I'm doing well, thank you!", result.get(0).getMessageText());
+    }
 
     @Override
     public void update(final String notification) {

@@ -41,7 +41,7 @@ public interface SearchStrategy {
      * @return A string representation of the search option.
      */
     @Override
-    public String toString();
+    String toString();
 }
 
 

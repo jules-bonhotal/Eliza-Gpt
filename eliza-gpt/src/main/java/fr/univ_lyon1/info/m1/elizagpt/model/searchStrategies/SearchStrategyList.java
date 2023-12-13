@@ -1,4 +1,4 @@
-package fr.univ_lyon1.info.m1.elizagpt.view;
+package fr.univ_lyon1.info.m1.elizagpt.model;
 
 import java.util.ArrayList;
 

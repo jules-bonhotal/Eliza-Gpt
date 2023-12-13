@@ -18,6 +18,8 @@ public class MessageStorage {
      */
     public MessageStorage() {
         addMessage("0", "Bonjour!", false);
+        notifyObservers("add-message");
+        
     }
 
     /**

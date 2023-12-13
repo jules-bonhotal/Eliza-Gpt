@@ -76,6 +76,7 @@ public class JfxView implements MessageObserver {
         stage.setScene(scene);
         text.requestFocus();
         stage.show();
+        update("start");
     }
 
 

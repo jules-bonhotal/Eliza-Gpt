@@ -1,7 +1,8 @@
 package fr.univ_lyon1.info.m1.elizagpt.model;
 
 import java.util.List;
-import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
+// import fr.univ_lyon1.info.m1.elizagpt.model.Message;
+// import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 
 
 
@@ -21,7 +22,7 @@ public interface SearchStrategy {
      * @param messageStorage The storage containing messages.
      * @return A list of messages matching the search criteria.
      */
-    List<MessageStorage.Message> executeSearch(
+    List<Message> executeSearch(
                 String searchQuery,
                 MessageStorage messageStorage);
 

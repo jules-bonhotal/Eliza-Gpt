@@ -75,9 +75,9 @@ public class MessageProcessor implements MessageObserver {
      * @return
      */
     protected String getName() {
-        List<MessageStorage.Message> messages = messageStorage.getMessages();
+        List<Message> messages = messageStorage.getMessages();
 
-        for (MessageStorage.Message message : messages) {
+        for (Message message : messages) {
             String messageText = message.getMessageText();
             Pattern pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(messageText);

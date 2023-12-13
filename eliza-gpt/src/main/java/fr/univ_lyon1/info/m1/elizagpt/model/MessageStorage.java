@@ -1,5 +1,7 @@
 package fr.univ_lyon1.info.m1.elizagpt.model;
 
+// import fr.univ_lyon1.info.m1.elizagpt.model.Message;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -19,7 +21,7 @@ public class MessageStorage {
     public MessageStorage() {
         addMessage("0", "Bonjour!", false);
         notifyObservers("add-message");
-        
+
     }
 
     /**
@@ -85,44 +87,44 @@ public class MessageStorage {
     // mais ca a sans doute a voir avec le fait de passer le pattern strategie 
     // dans le model
 
-    /**
-     * Find messages in the storage that match the given regular expression.
-     *
-     * @param regexPattern The regular expression pattern to match.
-     * @return A list of messages that match the given regular expression.
-     */
-    public List<Message> findMessagesByRegex(final String regexPattern) {
-        List<Message> matchingMessages = new ArrayList<>();
-        Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
+    // /**
+    //  * Find messages in the storage that match the given regular expression.
+    //  *
+    //  * @param regexPattern The regular expression pattern to match.
+    //  * @return A list of messages that match the given regular expression.
+    //  */
+    // public List<Message> findMessagesByRegex(final String regexPattern) {
+    //     List<Message> matchingMessages = new ArrayList<>();
+    //     Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
 
-        for (Message message : messages) {
-            Matcher matcher = pattern.matcher(message.getMessageText());
-            if (matcher.find()) {
-                matchingMessages.add(message);
-            }
-        }
+    //     for (Message message : messages) {
+    //         Matcher matcher = pattern.matcher(message.getMessageText());
+    //         if (matcher.find()) {
+    //             matchingMessages.add(message);
+    //         }
+    //     }
 
-        return matchingMessages;
-    }
+    //     return matchingMessages;
+    // }
 
 
-    /**
-     * Finds messages in the storage that contain the specified substring.
-     *
-     * @param substring The substring to search for.
-     * @return A list of messages containing the specified substring.
-     */
-    public List<Message> findMessagesBySubstring(final String substring) {
-        List<Message> matchingMessages = new ArrayList<>();
+    // /**
+    //  * Finds messages in the storage that contain the specified substring.
+    //  *
+    //  * @param substring The substring to search for.
+    //  * @return A list of messages containing the specified substring.
+    //  */
+    // public List<Message> findMessagesBySubstring(final String substring) {
+    //     List<Message> matchingMessages = new ArrayList<>();
 
-        for (Message message : messages) {
-            if (message.getMessageText().contains(substring)) {
-                matchingMessages.add(message);
-            }
-        }
+    //     for (Message message : messages) {
+    //         if (message.getMessageText().contains(substring)) {
+    //             matchingMessages.add(message);
+    //         }
+    //     }
 
-        return matchingMessages;
-    }
+    //     return matchingMessages;
+    // }
 
 
     /**
@@ -192,55 +194,5 @@ public class MessageStorage {
         return new ArrayList<>(observers);
     }
 
-    /**
-     * Represents a message with a unique identifier, message text, and user indication.
-     */
-    // TODO : voire si c'est pas mieux d'extraire cette classe pour limiter
-    // les dépendance a messageStorage
-    public static class Message {
-        private String messageId;
-        private String messageText;
-        private boolean isUser;
 
-
-        /**
-         * Constructs a Message object with the specified attributes.
-         *
-         * @param messageId   The unique identifier of the message.
-         * @param messageText The text content of the message.
-         * @param isUser      True if the message is from a user, otherwise false.
-         */
-        public Message(final String messageId, final String messageText, final boolean isUser) {
-            this.messageId = messageId;
-            this.messageText = messageText;
-            this.isUser = isUser;
-        }
-
-        /**
-         * Checks if the message is from a user.
-         *
-         * @return True if the message is from a user, otherwise false.
-         */
-        public boolean isUserMessage() {
-            return isUser;
-        }
-
-        /**
-         * Gets the unique identifier of the message.
-         *
-         * @return The message identifier.
-         */
-        public String getMessageId() {
-            return messageId;
-        }
-
-        /**
-         * Gets the text content of the message.
-         *
-         * @return The message text.
-         */
-        public String getMessageText() {
-            return messageText;
-        }
-    }
 }

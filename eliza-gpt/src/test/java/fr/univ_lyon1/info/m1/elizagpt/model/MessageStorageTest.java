@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
+import fr.univ_lyon1.info.m1.elizagpt.model.Message;
 
 
 class MessageStorageTest implements MessageObserver {
@@ -89,23 +90,23 @@ class MessageStorageTest implements MessageObserver {
         messageStorage.addMessage("3", "Hi there", true);
 
         // Find messages by regex for "Hello"
-        List<MessageStorage.Message> helloMessages = messageStorage.findMessagesByRegex("Hello");
+        List<Message> helloMessages = messageStorage.findMessagesByRegex("Hello");
         assertEquals(1, helloMessages.size());
         assertEquals("Hello", helloMessages.get(0).getMessageText());
 
         // Find messages by regex for "Bon.*"
-        List<MessageStorage.Message> bonjourMessages = messageStorage.findMessagesByRegex("Sal.*");
+        List<Message> bonjourMessages = messageStorage.findMessagesByRegex("Sal.*");
         assertEquals(1, bonjourMessages.size());
         assertEquals("Salut", bonjourMessages.get(0).getMessageText());
 
         // Find messages by regex for ".*there.*"
-        List<MessageStorage.Message> thereMessages =
+        List<Message> thereMessages =
                 messageStorage.findMessagesByRegex(".*there.*");
         assertEquals(1, thereMessages.size());
         assertEquals("Hi there", thereMessages.get(0).getMessageText());
 
         // Find messages by regex for "Nonexistent"
-        List<MessageStorage.Message> nonexistentMessages =
+        List<Message> nonexistentMessages =
                 messageStorage.findMessagesByRegex("Nonexistent");
         assertTrue(nonexistentMessages.isEmpty());
     }
@@ -117,7 +118,7 @@ class MessageStorageTest implements MessageObserver {
         storage.addMessage("1", "Hello, how are you?", false);
         storage.addMessage("2", "I'm doing well, thank you!", true);
 
-        List<MessageStorage.Message> result = storage.findMessagesBySubstring("well");
+        List<Message> result = storage.findMessagesBySubstring("well");
 
         assertEquals(1, result.size());
         assertEquals("I'm doing well, thank you!", result.get(0).getMessageText());
@@ -130,7 +131,7 @@ class MessageStorageTest implements MessageObserver {
         storage.addMessage("1", "Hello, how are you?", false);
         storage.addMessage("2", "I'm doing well, thank you!", true);
 
-        List<MessageStorage.Message> result = storage.findMessagesByWord("well");
+        List<Message> result = storage.findMessagesByWord("well");
 
         assertEquals(1, result.size());
         assertEquals("I'm doing well, thank you!", result.get(0).getMessageText());

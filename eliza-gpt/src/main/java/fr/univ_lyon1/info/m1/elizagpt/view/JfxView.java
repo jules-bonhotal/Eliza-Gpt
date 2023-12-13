@@ -9,8 +9,12 @@ import java.util.UUID;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
+import fr.univ_lyon1.info.m1.elizagpt.model.Message;
 import fr.univ_lyon1.info.m1.elizagpt.model.SearchStrategyList;
 import fr.univ_lyon1.info.m1.elizagpt.model.SearchStrategy;
+
+import fr.univ_lyon1.info.m1.elizagpt.controller.Controller;
+
 // import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 // import fr.univ_lyon1.info.m1.elizagpt.model.processUserInput;
 import javafx.geometry.Pos;
@@ -42,6 +46,7 @@ public class JfxView implements MessageObserver {
     private Label searchTextLabel = null;
     private MessageProcessor processor;
     private MessageStorage messageStorage;
+    private Controller controller;
     private final Random random = new Random();
     /**
      * Create the main view of the application.
@@ -49,12 +54,15 @@ public class JfxView implements MessageObserver {
     public JfxView(final Stage stage,
             final int width,
             final int height,
-            final MessageStorage messageStorage) {
+            final MessageStorage messageStorage,
+            final MessageProcessor messageProcessor,
+            final Controller controller) {
         //s'ajoute en temps qu'observer du stockage des message pour etre notifier des changements
         this.messageStorage = messageStorage;
         messageStorage.registerObserver(this);
 
-        processor = new MessageProcessor(messageStorage);
+        processor = messageProcessor;
+        this.controller = controller;
 
         stage.setTitle("Eliza GPT");
 
@@ -94,10 +102,10 @@ public class JfxView implements MessageObserver {
         dialog.getChildren().clear();
 
         // Get the messages from the MessageStorage
-        List<MessageStorage.Message> messages = messageStorage.getMessages();
+        List<Message> messages = messageStorage.getMessages();
 
         // Create HBox elements based on the messages
-        for (MessageStorage.Message message : messages) {
+        for (Message message : messages) {
             HBox hBox;
             if (message.isUserMessage()) {
                 hBox = createHBoxWithLabel(message.getMessageText(),
@@ -179,7 +187,7 @@ public class JfxView implements MessageObserver {
 
             // Utilisation de la stratégie sélectionnée pour la recherche
             if (selectedOption != null) {
-                List<MessageStorage.Message> matchingMessages = 
+                List<Message> matchingMessages = 
                         selectedOption.executeSearch(regexPattern, messageStorage);
                 updateSearchResults(matchingMessages);
             }
@@ -193,7 +201,7 @@ public class JfxView implements MessageObserver {
 
             // Utilisation de la stratégie sélectionnée pour la recherche
             if (selectedOption != null) {
-                List<MessageStorage.Message> matchingMessages = 
+                List<Message> matchingMessages = 
                         selectedOption.executeSearch(regexPattern, messageStorage);
                 updateSearchResults(matchingMessages);
             }
@@ -213,10 +221,10 @@ public class JfxView implements MessageObserver {
 
 
     // update the search results in the View
-    private void updateSearchResults(final List<MessageStorage.Message> matchingMessages) {
+    private void updateSearchResults(final List<Message> matchingMessages) {
         dialog.getChildren().clear();
 
-        for (MessageStorage.Message message : matchingMessages) {
+        for (Message message : matchingMessages) {
             HBox hBox;
             if (message.isUserMessage()) {
                 hBox = createHBoxWithLabel(message.getMessageText(),
@@ -262,13 +270,15 @@ public class JfxView implements MessageObserver {
         text = new TextField();
         text.setOnAction(e -> {
             // TODO : voire si il faut pas que ca passe par le contoller 
-            processor.sendMessage(text.getText());
+            // processor.sendMessage(text.getText());
+            controller.sendMessage(text.getText());
             text.setText("");
         });
         final Button send = new Button("Send");
         send.setOnAction(e -> {
             // TODO : voire si il faut pas que ca passe par le contoller 
-            processor.sendMessage(text.getText());
+            // processor.sendMessage(text.getText());
+            controller.sendMessage(text.getText());
             text.setText("");
         });
         input.getChildren().addAll(text, send);

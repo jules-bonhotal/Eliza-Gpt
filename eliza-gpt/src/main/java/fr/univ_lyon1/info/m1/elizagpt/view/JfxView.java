@@ -6,7 +6,7 @@ import java.util.UUID;
 // import java.util.Collections;
 
 
-import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
+// import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 import fr.univ_lyon1.info.m1.elizagpt.model.Message;
@@ -44,7 +44,7 @@ public class JfxView implements MessageObserver {
     private TextField text = null;
     private TextField searchText = null;
     private Label searchTextLabel = null;
-    private MessageProcessor processor;
+    // private MessageProcessor processor;
     private MessageStorage messageStorage;
     private Controller controller;
     private final Random random = new Random();
@@ -55,13 +55,13 @@ public class JfxView implements MessageObserver {
             final int width,
             final int height,
             final MessageStorage messageStorage,
-            final MessageProcessor messageProcessor,
+            // final MessageProcessor messageProcessor,
             final Controller controller) {
         //s'ajoute en temps qu'observer du stockage des message pour etre notifier des changements
         this.messageStorage = messageStorage;
         messageStorage.registerObserver(this);
 
-        processor = messageProcessor;
+        // processor = messageProcessor;
         this.controller = controller;
 
         stage.setTitle("Eliza GPT");

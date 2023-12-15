@@ -21,9 +21,9 @@ public class App extends Application {
         MessageProcessor processor = new MessageProcessor(messageStorage);
         Controller controller = new Controller(processor);
 
-        new JfxView(stage, 600, 600, messageStorage, processor, controller);
+        new JfxView(stage, 600, 600, messageStorage, /*processor,*/ controller);
         // Second view (uncomment to activate)
-        new JfxView(new Stage(), 900, 900, messageStorage, processor, controller);
+        new JfxView(new Stage(), 900, 900, messageStorage, /*processor,*/ controller);
         
     }
 

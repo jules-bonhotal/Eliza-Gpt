@@ -35,9 +35,8 @@ public class Controller {
 	    processor.sendMessage(text);
 	}
 
-
     /**
-     * Removes a message by its unique identifier and notifies observers.
+     * Removes a message from the underlying message storage by its unique identifier.
      *
      * @param messageId The unique identifier of the message to be removed.
      */
@@ -46,9 +45,9 @@ public class Controller {
     }
 
     /**
-     * Retrieves a copy of the list of messages stored in the MessageStorage.
+     * Retrieves a copy of the list of messages stored in the underlying MessageStorage.
      *
-     * @return A list of Message objects.
+     * @return A list of Message objects representing the stored messages.
      */
     public List<Message> getMessages() {
         return storage.getMessages();

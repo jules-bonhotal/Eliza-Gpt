@@ -3,10 +3,8 @@ package fr.univ_lyon1.info.m1.elizagpt.view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-// import java.util.Collections;
 
 
-// import fr.univ_lyon1.info.m1.elizagpt.model.MessageProcessor;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
 import fr.univ_lyon1.info.m1.elizagpt.model.Message;
@@ -15,10 +13,7 @@ import fr.univ_lyon1.info.m1.elizagpt.model.SearchStrategy;
 
 import fr.univ_lyon1.info.m1.elizagpt.controller.Controller;
 
-// import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
-// import fr.univ_lyon1.info.m1.elizagpt.model.processUserInput;
 import javafx.geometry.Pos;
-// import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,12 +23,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-// import java.util.regex.Matcher;
-// import java.util.regex.Pattern;
 import java.util.Random;
-// import javafx.scene.control.ChoiceBox;
 import javafx.collections.FXCollections;
-// import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 
 /**
@@ -96,7 +87,6 @@ public class JfxView implements MessageObserver {
      *
      * @param notification The notification string indicating the type of update.
      */
-
     public void update(final String notification) {
         // Clear existing HBox elements
         dialog.getChildren().clear();
@@ -130,36 +120,36 @@ public class JfxView implements MessageObserver {
     static final String ELIZA_STYLE = "-fx-background-color: #A0A0E0; " + BASE_STYLE;
 
     // Factorize the creation of HBox with label and button
-private HBox createHBoxWithLabel(final String text,
-        final String style,
-        final String messageId) {
-    HBox outerHBox = new HBox();
-    HBox innerHBox = new HBox();
-    final Label label = new Label(text);
-    final Button deleteButton = new Button("x");
+    private HBox createHBoxWithLabel(final String text,
+            final String style,
+            final String messageId) {
+        HBox outerHBox = new HBox();
+        HBox innerHBox = new HBox();
+        final Label label = new Label(text);
+        final Button deleteButton = new Button("x");
 
-    if (style.equals(USER_STYLE)) {
-        innerHBox.getChildren().addAll(deleteButton, label);
-        outerHBox.setAlignment(Pos.BASELINE_RIGHT);
-        // deleteButton.setAlignment(Pos.BASELINE_LEFT);
-    } else {
-        innerHBox.getChildren().addAll(label, deleteButton);
-        outerHBox.setAlignment(Pos.BASELINE_LEFT);
-        // deleteButton.setAlignment(Pos.BASELINE_RIGHT);
+        if (style.equals(USER_STYLE)) {
+            innerHBox.getChildren().addAll(deleteButton, label);
+            outerHBox.setAlignment(Pos.BASELINE_RIGHT);
+            // deleteButton.setAlignment(Pos.BASELINE_LEFT);
+        } else {
+            innerHBox.getChildren().addAll(label, deleteButton);
+            outerHBox.setAlignment(Pos.BASELINE_LEFT);
+            // deleteButton.setAlignment(Pos.BASELINE_RIGHT);
+        }
+
+        innerHBox.setStyle(style);
+        outerHBox.getChildren().add(innerHBox);
+
+        outerHBox.setId(messageId);
+
+        deleteButton.setOnAction(e -> {
+            dialog.getChildren().remove(outerHBox);
+            controller.removeMessageById(messageId);
+        });
+
+        return outerHBox;
     }
-
-    innerHBox.setStyle(style);
-    outerHBox.getChildren().add(innerHBox);
-
-    outerHBox.setId(messageId);
-
-    deleteButton.setOnAction(e -> {
-        dialog.getChildren().remove(outerHBox);
-        controller.removeMessageById(messageId);
-    });
-
-    return outerHBox;
-}
 
 
     private HBox createHBoxWithLabel(final String text, final String style) {
@@ -194,11 +184,9 @@ private HBox createHBoxWithLabel(final String text,
 
             // Utilisation de la stratégie sélectionnée pour la recherche
             if (selectedOption != null) {
-                // List<Message> matchingMessages = 
                 List<Message> matchingMessages = controller.executeSearchController(
                     selectedOption,
                     regexPattern);
-                        // selectedOption.executeSearch(regexPattern, messageStorage);
                 updateSearchResults(matchingMessages);
             }
         });
@@ -214,17 +202,18 @@ private HBox createHBoxWithLabel(final String text,
                 List<Message> matchingMessages = controller.executeSearchController(
                                     selectedOption,
                                     regexPattern);
-                        // selectedOption.executeSearch(regexPattern, messageStorage);
                 updateSearchResults(matchingMessages);
             }
         });
 
         searchTextLabel = new Label();
         final Button undo = new Button("Undo search");
-        // undo.setOnAction(e -> {
-        //     // TODO: implement undo for search
-        // });
-        secondLine.getChildren().addAll(send, searchTextLabel); //, undo);
+        undo.setOnAction(e -> {
+            // Clear the search text and update the view
+            searchText.clear();
+            update("start");
+        });
+        secondLine.getChildren().addAll(send, searchTextLabel, undo);
         final VBox input = new VBox();
         input.getChildren().addAll(firstLine, secondLine);
         return input;

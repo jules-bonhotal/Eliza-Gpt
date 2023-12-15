@@ -130,30 +130,37 @@ public class JfxView implements MessageObserver {
     static final String ELIZA_STYLE = "-fx-background-color: #A0A0E0; " + BASE_STYLE;
 
     // Factorize the creation of HBox with label and button
-    private HBox createHBoxWithLabel(final String text,
-            final String style,
-            final String messageId) {
-        HBox outerHBox = new HBox();
-        outerHBox.setAlignment(Pos.BASELINE_LEFT);
+private HBox createHBoxWithLabel(final String text,
+        final String style,
+        final String messageId) {
+    HBox outerHBox = new HBox();
+    HBox innerHBox = new HBox();
+    final Label label = new Label(text);
+    final Button deleteButton = new Button("x");
 
-        HBox innerHBox = new HBox();
-        final Label label = new Label(text);
-        final Button deleteButton = new Button("x");
+    if (style.equals(USER_STYLE)) {
+        innerHBox.getChildren().addAll(deleteButton, label);
+        outerHBox.setAlignment(Pos.BASELINE_RIGHT);
+        // deleteButton.setAlignment(Pos.BASELINE_LEFT);
+    } else {
         innerHBox.getChildren().addAll(label, deleteButton);
-        innerHBox.setAlignment(Pos.BASELINE_LEFT);
-        innerHBox.setStyle(style);
-
-        outerHBox.getChildren().add(innerHBox);
-
-        outerHBox.setId(messageId);
-
-        deleteButton.setOnAction(e -> {
-            dialog.getChildren().remove(outerHBox);
-            messageStorage.removeMessageById(messageId);
-        });
-
-        return outerHBox;
+        outerHBox.setAlignment(Pos.BASELINE_LEFT);
+        // deleteButton.setAlignment(Pos.BASELINE_RIGHT);
     }
+
+    innerHBox.setStyle(style);
+    outerHBox.getChildren().add(innerHBox);
+
+    outerHBox.setId(messageId);
+
+    deleteButton.setOnAction(e -> {
+        dialog.getChildren().remove(outerHBox);
+        messageStorage.removeMessageById(messageId);
+    });
+
+    return outerHBox;
+}
+
 
     private HBox createHBoxWithLabel(final String text, final String style) {
         String uniqueId = UUID.randomUUID().toString();

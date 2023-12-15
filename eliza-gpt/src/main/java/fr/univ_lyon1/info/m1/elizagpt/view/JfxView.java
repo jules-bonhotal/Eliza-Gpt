@@ -45,7 +45,7 @@ public class JfxView implements MessageObserver {
     private TextField searchText = null;
     private Label searchTextLabel = null;
     // private MessageProcessor processor;
-    private MessageStorage messageStorage;
+    // private MessageStorage messageStorage;
     private Controller controller;
     private final Random random = new Random();
     /**
@@ -58,7 +58,7 @@ public class JfxView implements MessageObserver {
             // final MessageProcessor messageProcessor,
             final Controller controller) {
         //s'ajoute en temps qu'observer du stockage des message pour etre notifier des changements
-        this.messageStorage = messageStorage;
+        // this.messageStorage = messageStorage;
         messageStorage.registerObserver(this);
 
         // processor = messageProcessor;
@@ -102,7 +102,7 @@ public class JfxView implements MessageObserver {
         dialog.getChildren().clear();
 
         // Get the messages from the MessageStorage
-        List<Message> messages = messageStorage.getMessages();
+        List<Message> messages = controller.getMessages();
 
         // Create HBox elements based on the messages
         for (Message message : messages) {
@@ -155,7 +155,7 @@ private HBox createHBoxWithLabel(final String text,
 
     deleteButton.setOnAction(e -> {
         dialog.getChildren().remove(outerHBox);
-        messageStorage.removeMessageById(messageId);
+        controller.removeMessageById(messageId);
     });
 
     return outerHBox;
@@ -194,8 +194,11 @@ private HBox createHBoxWithLabel(final String text,
 
             // Utilisation de la stratégie sélectionnée pour la recherche
             if (selectedOption != null) {
-                List<Message> matchingMessages = 
-                        selectedOption.executeSearch(regexPattern, messageStorage);
+                // List<Message> matchingMessages = 
+                List<Message> matchingMessages = controller.executeSearchController(
+                    selectedOption,
+                    regexPattern);
+                        // selectedOption.executeSearch(regexPattern, messageStorage);
                 updateSearchResults(matchingMessages);
             }
         });
@@ -208,8 +211,10 @@ private HBox createHBoxWithLabel(final String text,
 
             // Utilisation de la stratégie sélectionnée pour la recherche
             if (selectedOption != null) {
-                List<Message> matchingMessages = 
-                        selectedOption.executeSearch(regexPattern, messageStorage);
+                List<Message> matchingMessages = controller.executeSearchController(
+                                    selectedOption,
+                                    regexPattern);
+                        // selectedOption.executeSearch(regexPattern, messageStorage);
                 updateSearchResults(matchingMessages);
             }
         });

@@ -27,14 +27,6 @@ public interface SearchStrategy {
                 MessageStorage messageStorage);
 
 
-    // /**
-    //  * Returns the name of the search option.
-    //  * Used to avoid using magic numbers in UI components.
-    //  *
-    //  * @return The name of the search option.
-    //  */
-    // String getOptionName();
-
     /**
      * Returns a string representation of the search option.
      * By default, it is the same as the option name.

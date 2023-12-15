@@ -19,7 +19,7 @@ public class App extends Application {
     public void start(final Stage stage) throws Exception {
         MessageStorage messageStorage = new MessageStorage();
         MessageProcessor processor = new MessageProcessor(messageStorage);
-        Controller controller = new Controller(processor);
+        Controller controller = new Controller(processor, messageStorage);
 
         new JfxView(stage, 600, 600, messageStorage, /*processor,*/ controller);
         // Second view (uncomment to activate)

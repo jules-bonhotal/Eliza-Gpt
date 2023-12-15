@@ -1,5 +1,8 @@
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageObserver;
 import fr.univ_lyon1.info.m1.elizagpt.model.MessageStorage;
+import fr.univ_lyon1.info.m1.elizagpt.model.RegexSearchStrategy;
+import fr.univ_lyon1.info.m1.elizagpt.model.FindMessagesBySubstringStrategy;
+import fr.univ_lyon1.info.m1.elizagpt.model.FindMessagesByWordStrategy;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -83,31 +86,32 @@ class MessageStorageTest implements MessageObserver {
     @Test
     void testFindMessagesByRegex() {
         MessageStorage messageStorage = new MessageStorage();
-        
+        RegexSearchStrategy strat = new RegexSearchStrategy();
+
         // Add messages with different texts
         messageStorage.addMessage("1", "Hello", true);
         messageStorage.addMessage("2", "Salut", true);
         messageStorage.addMessage("3", "Hi there", true);
 
         // Find messages by regex for "Hello"
-        List<Message> helloMessages = messageStorage.findMessagesByRegex("Hello");
+        List<Message> helloMessages = strat.executeSearch("Hello", messageStorage);
         assertEquals(1, helloMessages.size());
         assertEquals("Hello", helloMessages.get(0).getMessageText());
 
         // Find messages by regex for "Bon.*"
-        List<Message> bonjourMessages = messageStorage.findMessagesByRegex("Sal.*");
+        List<Message> bonjourMessages = strat.executeSearch("Sal.*", messageStorage);
         assertEquals(1, bonjourMessages.size());
         assertEquals("Salut", bonjourMessages.get(0).getMessageText());
 
         // Find messages by regex for ".*there.*"
         List<Message> thereMessages =
-                messageStorage.findMessagesByRegex(".*there.*");
+                strat.executeSearch(".*there.*", messageStorage);
         assertEquals(1, thereMessages.size());
         assertEquals("Hi there", thereMessages.get(0).getMessageText());
 
         // Find messages by regex for "Nonexistent"
         List<Message> nonexistentMessages =
-                messageStorage.findMessagesByRegex("Nonexistent");
+                strat.executeSearch("Nonexistent", messageStorage);
         assertTrue(nonexistentMessages.isEmpty());
     }
 
@@ -115,10 +119,12 @@ class MessageStorageTest implements MessageObserver {
     @Test
     void findMessagesBySubstring() {
         MessageStorage storage = new MessageStorage();
+        FindMessagesBySubstringStrategy strat = new FindMessagesBySubstringStrategy();
+
         storage.addMessage("1", "Hello, how are you?", false);
         storage.addMessage("2", "I'm doing well, thank you!", true);
 
-        List<Message> result = storage.findMessagesBySubstring("well");
+        List<Message> result = strat.executeSearch("well", storage);
 
         assertEquals(1, result.size());
         assertEquals("I'm doing well, thank you!", result.get(0).getMessageText());
@@ -128,10 +134,13 @@ class MessageStorageTest implements MessageObserver {
     @Test
     void findMessagesByWord() {
         MessageStorage storage = new MessageStorage();
+        FindMessagesByWordStrategy strat = new FindMessagesByWordStrategy();
+
+
         storage.addMessage("1", "Hello, how are you?", false);
         storage.addMessage("2", "I'm doing well, thank you!", true);
 
-        List<Message> result = storage.findMessagesByWord("well");
+        List<Message> result = strat.executeSearch("well", storage);
 
         assertEquals(1, result.size());
         assertEquals("I'm doing well, thank you!", result.get(0).getMessageText());

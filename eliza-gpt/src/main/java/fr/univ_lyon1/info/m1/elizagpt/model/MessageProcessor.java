@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class MessageProcessor implements MessageObserver {
     private final MessageStorage messageStorage;
     private final Random random = new Random();
+    private final ChainClient chainClient;
     //private final VerbCollection verbCollection;
 
     @Override
@@ -31,6 +32,15 @@ public class MessageProcessor implements MessageObserver {
         this.messageStorage = messageStorage;
         this.messageStorage.registerObserver(this);
         //this.verbCollection = verbCollection;
+
+        chainClient = new ChainClientBuilder(this)
+        .addHandler(new NameHandler())
+        .addHandler(new NameQuestionHandler())
+        .addHandler(new QuiEstLePlusHandler())
+        .addHandler(new JeHandler())
+        .addHandler(new QuestionHandler())
+        .addHandler(new RandomResponseHandler())
+        .build();
     }
 
     /**
@@ -74,7 +84,6 @@ public class MessageProcessor implements MessageObserver {
      * @return A generated response based on the analyzed patterns in the user input.
      */
     public String processUserInput(final String text) {
-        ChainClient chainClient = new ChainClient(this);
         return chainClient.processUserInput(text);
     }
 

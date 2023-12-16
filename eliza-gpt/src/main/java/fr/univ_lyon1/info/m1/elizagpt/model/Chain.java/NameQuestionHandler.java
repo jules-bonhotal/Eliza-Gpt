@@ -11,13 +11,7 @@ import java.util.regex.Pattern;
 public class NameQuestionHandler implements Handler {
     private Handler nextHandler = null;
     
-    /**
-     * Constructor of NameQuestionHandler.
-     * 
-     */
-    public NameQuestionHandler(final Handler nextHandler) {
-        this.nextHandler = nextHandler;
-    }
+
 
     @Override
     public String process(final String text, final MessageProcessor messageProcessor) {
@@ -33,5 +27,23 @@ public class NameQuestionHandler implements Handler {
         } else {
             return (nextHandler != null) ? nextHandler.process(text, messageProcessor) : null;
         }
+    }
+
+    /**
+     * Sets the next handler in the chain.
+     *
+     * @param next The next handler to be set in the chain.
+     */
+    public void setNextHandler(final Handler next) {
+        nextHandler = next;
+    }
+
+    /**
+     * Gets the next handler in the chain.
+     *
+     * @return The next handler in the chain.
+     */
+    public Handler getNextHandler() {
+        return nextHandler;
     }
 }

@@ -1,8 +1,7 @@
 package fr.univ_lyon1.info.m1.elizagpt.model;
 
+import fr.univ_lyon1.info.m1.elizagpt.model.modifytext.TextProcessor;
 
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,24 +15,23 @@ import java.util.regex.Pattern;
 public class MessageProcessor implements MessageObserver {
     private final MessageStorage messageStorage;
     private final Random random = new Random();
+    //private final VerbCollection verbCollection;
 
     @Override
     public void update(final String norification) {
         //TODO     
     }
 
-
     /**
      * Constructs a MessageProcessor by copying a specified MessageStorage.
      * 
      * @param messageStorage The MessageStorage to be copied with the MessageProcessor.
      */
-
     public MessageProcessor(final MessageStorage messageStorage) {
         this.messageStorage = messageStorage;
         this.messageStorage.registerObserver(this);
+        //this.verbCollection = verbCollection;
     }
-
 
     /**
      * Normlize the text: remove extra spaces, add a final dot if missing.
@@ -46,29 +44,6 @@ public class MessageProcessor implements MessageObserver {
                 .replaceAll("\\s+$", "")
                 .replaceAll("[^\\.!?:]$", "$0.");
     }
-
-
-    /**
-     * Information about conjugation of a verb.
-     */
-    public static class Verb {
-        private final String firstSingular;
-        private final String secondPlural;
-
-        public String getFirstSingular() {
-            return firstSingular;
-        }
-
-        public String getSecondPlural() {
-            return secondPlural;
-        }
-
-        Verb(final String firstSingular, final String secondPlural) {
-            this.firstSingular = firstSingular;
-            this.secondPlural = secondPlural;
-        }
-    }
-
 
     /**
      * Extract the name of the user from the dialog.
@@ -89,7 +64,6 @@ public class MessageProcessor implements MessageObserver {
 
         return null;
     }
-
 
     /**
      * Processes user input and generates a response based on predefined patterns.
@@ -126,7 +100,7 @@ public class MessageProcessor implements MessageObserver {
         if (matcher.matches()) {
             return "Le plus " + matcher.group(1) + " est bien sûr votre enseignant de MIF01 !";
         }
-        pattern = Pattern.compile("(Je .*)\\.", Pattern.CASE_INSENSITIVE);
+        pattern = Pattern.compile("((Je .*)|(J'.*))\\.", Pattern.CASE_INSENSITIVE);
         matcher = pattern.matcher(normalizedText);
         if (matcher.matches()) {
             final String startQuestion = pickRandom(new String[] {
@@ -146,10 +120,6 @@ public class MessageProcessor implements MessageObserver {
             return reponse;
         }
 
-
-
-
-
         // Nothing clever to say, answer randomly
         if (random.nextBoolean()) {
             return "Il faut beau aujourd'hui, vous ne trouvez pas ?";
@@ -168,21 +138,15 @@ public class MessageProcessor implements MessageObserver {
         }
     }
 
-
     private String generateUniqueId() {
         return UUID.randomUUID().toString();
     }
-
 
     private void replyToUser(final String text) {
         String uniqueId = generateUniqueId();
         messageStorage.addMessage(uniqueId, text, false);
     }
         
-
-
-
-
     /**
      * Sends a user message to the message storage.
      *
@@ -198,23 +162,6 @@ public class MessageProcessor implements MessageObserver {
         replyToUser(reply);
     }
 
-
-
-    /**
-     * List of 3rd group verbs and their correspondance from 1st person signular
-     * (Je) to 2nd person plural (Vous).
-     */
-    protected static final List<Verb> VERBS = Arrays.asList(
-            new Verb("suis", "êtes"),
-            new Verb("vais", "allez"),
-            new Verb("dis", "dites"),
-            new Verb("ai", "avez"),
-            new Verb("fais", "faites"),
-            new Verb("sais", "savez"),
-            new Verb("peux", "pouvez"),
-            new Verb("veux", "voulez"),
-            new Verb("dois", "devez"));
-
     /**
      * Turn a 1st-person sentence (Je ...) into a plural 2nd person (Vous ...).
      * The result is not capitalized to allow forming a new sentence.
@@ -225,19 +172,9 @@ public class MessageProcessor implements MessageObserver {
      * @return The 2nd-person sentence.
      */
     public String firstToSecondPerson(final String text) {
-        String processedText = text
-                .replaceAll("[Jj]e ([a-z]*)e ", "vous $1ez ");
-        for (Verb v : VERBS) {
-            processedText = processedText.replaceAll(
-                    "[Jj]e " + v.getFirstSingular(),
-                    "vous " + v.getSecondPlural());
-        }
-        processedText = processedText
-                .replaceAll("[Jj]e ([a-z]*)s ", "vous $1ssez ")
-                .replace("mon ", "votre ")
-                .replace("ma ", "votre ")
-                .replace("mes ", "vos ")
-                .replace("moi", "vous");
+        String processedText = TextProcessor.modifyPronouns(text);
+        processedText = TextProcessor.modifyVerbs(processedText);
+        processedText = TextProcessor.modifyDeterminers(processedText);
         return processedText;
     }
 

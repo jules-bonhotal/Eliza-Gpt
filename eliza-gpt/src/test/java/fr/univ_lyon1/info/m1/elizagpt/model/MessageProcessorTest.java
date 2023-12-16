@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -37,18 +34,6 @@ public class MessageProcessorTest {
 
         assertThat(p.firstToSecondPerson("Je finis mon travail."),
                 is("vous finissez votre travail."));
-    }
-
-    /**
-     * Not so relevant test, but here to give an example of non-trivial
-     * hamcrest assertion.
-     */
-    @Test
-    void testVerbList() {
-        assertThat(MessageProcessor.VERBS, hasItem(
-                allOf(
-                        hasProperty("firstSingular", is("suis")),
-                        hasProperty("secondPlural", is("êtes")))));
     }
 
     @Test

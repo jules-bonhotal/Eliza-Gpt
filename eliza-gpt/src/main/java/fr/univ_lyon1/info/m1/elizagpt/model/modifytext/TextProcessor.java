@@ -45,10 +45,10 @@ public final class TextProcessor {
      */
     public static String modifyDeterminers(final String text) {
         String processedText = text
-                .replace("mon ", "votre ")
-                .replace("ma ", "votre ")
-                .replace("mes ", "vos ")
-                .replace("moi", "vous");
+                .replaceAll("[Mm]on ", "votre ")
+                .replaceAll("[Mm]a ", "votre ")
+                .replaceAll("[Mm]es ", "vos ")
+                .replaceAll("[Mm]oi ", "vous ");
         return processedText;
     }
 }

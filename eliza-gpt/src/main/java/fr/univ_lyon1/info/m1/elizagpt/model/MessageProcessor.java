@@ -35,6 +35,8 @@ public class MessageProcessor implements MessageObserver {
 
         chainClient = new ChainClientBuilder(this)
         .addHandler(new NameHandler())
+        .addHandler(new PersonalisedResponseHandler())
+        .addHandler(new GoodbyeHandler())
         .addHandler(new NameQuestionHandler())
         .addHandler(new QuiEstLePlusHandler())
         .addHandler(new JeHandler())

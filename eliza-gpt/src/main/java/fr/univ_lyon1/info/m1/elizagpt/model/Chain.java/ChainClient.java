@@ -18,12 +18,6 @@ public class ChainClient {
     public ChainClient(final MessageProcessor messageProcessor, final Handler chain) {
         this.messageProcessor = messageProcessor;
         this.chain = chain;
-        // this.chain = new NameHandler(
-        //                 new NameQuestionHandler(
-        //                     new QuiEstLePlusHandler(
-        //                         new JeHandler(
-        //                             new QuestionHandler(
-        //                                 new RandomResponseHandler(null))))));
     }
 
     /**

@@ -3,6 +3,7 @@ package fr.univ_lyon1.info.m1.elizagpt.model;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -124,5 +125,41 @@ public class MessageProcessorTest {
         // Test case: Case-insensitive matching
         messageStorage.addMessage("4", "Je M'appelle Dave.", true);
         assertThat(processor.getName(), is("Dave"));
+    }
+
+
+    @Test
+    void testGoodbyeHandler() {
+        // Given
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor processor = new MessageProcessor(messageStorage);
+
+        // Test "Au revoir" without knowing the name
+        assertThat(processor.processUserInput("Au revoir."),
+                anyOf(is("Oh non, c'est trop triste de se quitter !"), is("Au revoir !")));
+
+        // Test "Au revoir" with knowing the name
+        messageStorage.addMessage("1", "Je m'appelle Alice.", true);
+        assertThat(processor.processUserInput("Au revoir."),
+                anyOf(is("Oh non, c'est trop triste de se quitter Alice !"),
+                      is("Au revoir Alice !")));
+    }
+
+
+
+    @Test
+    void testProjectRatingHandler() {
+        // Given
+        MessageStorage messageStorage = new MessageStorage();
+        MessageProcessor processor = new MessageProcessor(messageStorage);
+
+        assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur 20 ?"),
+                is("20/20 ez"));
+
+        assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur 20?"),
+                is(not("20/20 ez")));
+
+        assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur vingt ?"),
+                is(not("20/20 ez")));
     }
 }

@@ -58,7 +58,9 @@ public class MessageProcessor implements MessageObserver {
             Matcher matcher = pattern.matcher(messageText);
 
             if (matcher.matches()) {
-                return matcher.group(1);
+                String userName = matcher.group(1);
+                // Capitalize the first letter of the name
+                return userName.substring(0, 1).toUpperCase() + userName.substring(1);
             }
         }
 
@@ -71,71 +73,9 @@ public class MessageProcessor implements MessageObserver {
      * @param text The user input to be processed.
      * @return A generated response based on the analyzed patterns in the user input.
      */
-
-// TODO : a revoir pour que ce soit pas une suite de if else et implementer un pattern
     public String processUserInput(final String text) {
-        String normalizedText = normalize(text);
-    
-        Pattern pattern;
-        Matcher matcher;
-    
-        // First, try to answer specifically to what the user said
-        pattern = Pattern.compile(".*Je m'appelle (.*)\\.", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            return "Bonjour " + matcher.group(1) + ".";
-        }
-
-        pattern = Pattern.compile("Quel est mon nom \\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-             if (getName() != null) {
-                 return "Votre nom est " + getName() + ".";
-             } else {
-                return "Je ne connais pas votre nom.";
-             }
-        }
-        pattern = Pattern.compile("Qui est le plus (.*) \\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            return "Le plus " + matcher.group(1) + " est bien sûr votre enseignant de MIF01 !";
-        }
-        pattern = Pattern.compile("((Je .*)|(J'.*))\\.", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            final String startQuestion = pickRandom(new String[] {
-                "Pourquoi dites-vous que ",
-                "Pourquoi pensez-vous que ",
-                "Êtes-vous sûr que ",
-            });
-            return startQuestion + firstToSecondPerson(matcher.group(1)) + " ?";
-        }
-        pattern = Pattern.compile("(.*)\\?", Pattern.CASE_INSENSITIVE);
-        matcher = pattern.matcher(normalizedText);
-        if (matcher.matches()) {
-            final String reponse = pickRandom(new String[] {//TODO VOIR SI CA DEVRAIT ETRE LA
-                    "Ici, c'est moi qui pose les questions. ",
-                    "Je vous renvoie la question. ",
-            });
-            return reponse;
-        }
-
-        // Nothing clever to say, answer randomly
-        if (random.nextBoolean()) {
-            return "Il faut beau aujourd'hui, vous ne trouvez pas ?";
-        }
-        if (random.nextBoolean()) {
-            return "Je ne comprends pas.";
-        }
-        if (random.nextBoolean()) {
-            return "Hmmm, hmm ...";
-        }
-        // Default answer
-        if (getName() != null) {
-            return "Qu'est-ce qui vous fait dire cela, " + getName() + " ?";
-        } else {
-            return "Qu'est-ce qui vous fait dire cela ?";
-        }
+        ChainClient chainClient = new ChainClient(this);
+        return chainClient.processUserInput(text);
     }
 
     private String generateUniqueId() {

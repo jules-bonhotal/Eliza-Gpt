@@ -47,7 +47,7 @@ public class MessageProcessorTest {
         // Test random responses
         String randomResponse = processor.processUserInput("Random input");
         assertThat(randomResponse, anyOf(
-                is("Il faut beau aujourd'hui, vous ne trouvez pas ?"),
+                is("Il fait beau aujourd'hui, vous ne trouvez pas ?"),
                 is("Je ne comprends pas."),
                 is("Hmmm, hmm ..."),
                 is("Qu'est-ce qui vous fait dire cela ?")));

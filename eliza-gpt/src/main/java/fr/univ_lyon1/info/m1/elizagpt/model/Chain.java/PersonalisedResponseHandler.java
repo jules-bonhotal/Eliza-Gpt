@@ -1,6 +1,7 @@
 package fr.univ_lyon1.info.m1.elizagpt.model;
 
 import java.util.regex.Matcher;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -14,9 +15,14 @@ public class PersonalisedResponseHandler implements Handler {
         Pattern pattern = Pattern.compile("Combien tu penses que ce projet mérite sur 20 \\?",
                 Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(messageProcessor.normalize(text));
+        Random random = new Random();
 
         if (matcher.matches()) {
-            return "20/20 ez";
+            final String[] options = {
+                    "Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) ",
+                    "20/20 ez ",
+            };
+            return options[random.nextInt(options.length)];
         } else {
             return (nextHandler != null) ? nextHandler.process(text, messageProcessor) : null;
         }

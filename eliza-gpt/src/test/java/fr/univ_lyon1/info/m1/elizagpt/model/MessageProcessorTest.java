@@ -62,13 +62,13 @@ public class MessageProcessorTest {
         MessageProcessor processor = new MessageProcessor(messageStorage);
 
 
-        
+
         assertThat(processor.processUserInput("Quel est mon nom ?"),
                 is("Je ne connais pas votre nom."));
 
         assertThat(processor.processUserInput("Je m'appelle Alice."),
                 is("Bonjour Alice."));
-        
+
         // la fonction preocessUserInput ne rajoute pas les message dans le storage en lui meme
         messageStorage.addMessage("1", "Je m'appelle Alice.", true);
 
@@ -142,7 +142,7 @@ public class MessageProcessorTest {
         messageStorage.addMessage("1", "Je m'appelle Alice.", true);
         assertThat(processor.processUserInput("Au revoir."),
                 anyOf(is("Oh non, c'est trop triste de se quitter Alice !"),
-                      is("Au revoir Alice !")));
+                        is("Au revoir Alice !")));
     }
 
 
@@ -154,15 +154,15 @@ public class MessageProcessorTest {
         MessageProcessor processor = new MessageProcessor(messageStorage);
 
         assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur 20 ?"),
-        anyOf(is("20/20 ez "),
-        is("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) ")));
+            anyOf(is("20/20 ez "),
+            is("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) ")));
 
         assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur 20?"),
-        anyOf(is(not("20/20 ez ")),
-        is(not("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) "))));
+            anyOf(is(not("20/20 ez ")),
+            is(not("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨)"))));
 
         assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur vingt ?"),
-        anyOf(is(not("20/20 ez ")),
-        is(not("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) "))));
+            anyOf(is(not("20/20 ez ")),
+            is(not("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨)"))));
     }
 }

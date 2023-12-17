@@ -1,0 +1,73 @@
+On noteras que lors de l'edition du document on a perdu certain partie des texte pre-chatGPT mais ce document est présent plus comme une preuve de bonne foix que comme une archive exaustive.
+
+\subsection{MCV et observer}
+Le pattern MVC (voire figure \ref{fig:MVC}) a été implementer dans ce projet car c'etait une des consignes, mais il permet aussi de mieux séparer les responsabiliter des classes en accordance avec le principe de single responsability (S de SOLID). Ce pattern repose principalement sur l'inmplementation de la class MessageStorage qui joue de role d'observable. Grace a l'interface observer utiliser par les acteurs qui on besoin de connaite l'etat du stockage des message, ce qui permet une invertion de dépendance (D de SOLID).
+Dans le cadre de ce projet le pettern Observer a été legermenet modifier en faisant que l'observable n'implement pas d'interface observable car il ne semblais pas essesaires de rajouter de nouveau objet observables dans ce que nous avions prévus d'implementer.
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{MVC.png}
+    \caption{Pattern MVC et Observer.}
+    \label{fig:MVC}
+\end{figure}
+
+
+\subsection{Strategy}
+
+Pour l'implementation des strategies de recherches nous avons choisit le pattern strategy car il permet notament l'ajout facil de nouvelle strategies de rechreceh snas avoir a faire de modification important au reste du code. Ils sufit de faire en sorte que la nouvelle strategie implmente l'inteface strategies et de rajouter une instance de la nouvelle strategie dans la class utilitaire qui retourn un liste de toutes les strategie. De plsus il limite le couplage enntres les differentes strategies qui sont independantes les unes des autres.
+Autrement dit ce pattern permet d'etre ouvert a la modification, tout en restant fermer a la modification car il n'y a pas besoin de mofier le code existant pour rajouter des strategies (O de SOLID). 
+Nos strategies sont aussi contraintes par leur interface d'implementer leur propre versiton de la fonction toString() (héritée de la class objet de java) qui est utiliser pour l'affichage.
+
+tostring
+
+
+[Insérez diagrammes ici + explicaiton ]
+
+\subsection{Chaine de résponsabiliter}
+
+Pour la reimplmentation des règles de réponse fournis par élizat, nous avont choisit le pattern Chain de responsabiliter (et Builder voire \ref{Builder-Pattern}). Ce pattern a été choisit car il correspond a la foncitonaliter qu'on cherchait a implementer mais permet aussi de facilement de rajouter de nouvelles règles facilement. De plus les differentes règles on peut de couplage entre elles et il est donc possible de les mofier individuelment sans impacter le comportement des autres règles.
+
+
+on a préférer la chaine de responsabiliter a l'arbre de responsabiliter car dans le cadre de ce projet un traitement sequencield des règles de reponse etait sufisant. Il est cepandant interesant de remarque qu'en fonciton de l'implementaiton de l'arbre de responsabiliter il aurais pus permetre de mettres plusieurs règles au meme niveau de prioriter ou de faire des traitment plsu complex avec des suite de règles a valider pour obtenir une réponse spécifique.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Chaine et Builder.png}
+    \caption{Pattern Chaine de responsabiliter et Builder.}
+    \label{fig:ChaineBuilder}
+\end{figure}
+
+
+
+parler du processeur( ou storage ?) en parametre de fonciton pour eviter les dépendances.
+
+\subsection{Builder}\label{Builder-Pattern}
+
+Malheureusement le pattern Chaine de résponsabiliter a tendance a avoir une initialisaiton peut pratiqeu. Seulement avec pattern il aurait fallus faire une chaine de nouveau objet comme suit new Chaine1(new Chaine2(new chain3(...))) ce qui rend l'edition de l'ordre de des reègles ou leur rajout non idéal. Pour éviter cela nous avont décider d'utiliser le pattern Builder. Celui permet de faciliter la creation d'une chaine de reponsabiliter.
+
+ajouter des trucs
+\section{Éthique}
+
+parler du fait que dans la meusure ou la plupart des IA génératives en sont pas runable localement (comme chatGPT) ca donnait un pouvoir important de direction au entreprises qui les dévelopent. Par example si on imagine un future un peut caricatural ou 100\% des developer utilise chatGPT, et que open IA fait une mise a jours du model qui le rend moins efficace pour le developement web mais meilleur pour le developement de jeux video, ca pourais avoir un enorme impact sur l'efficaciter des entreprises web et de celles de developement de jeux video sans que ces dernieres soit capable de faire grand chose. Sans meme parler de modification du model de manière malicieuse pour par example ralentire le developement de concurent a openAI, il est possible que openAI ait simplement un certain biais envers ou contre certain type de developement et que ce bias se reflete dans l'efficaciter de leur model dans le dévelopement de certain type d'applicaiton. Par example des dommaines qui ne sont pas très populaire aujourd'hui 
+ironiquement c'est ce qui est arrivée a l'ia qui etait vue comme un sujet de niche avant les ia biomimetique et qui maintenant est une des diciplines les plus populaires du monde de l'informatiqur. On peut se demander si un bias de la part de openIA envers les technologies qui on l'aire prometeuse aujourd'hui ne pourais ralentire le developement de nouveau secteur ou de secteur qui n'on pas l'aire pour l'instant très prometeurs alors qu'il pourait etre capital dans le future.
+
+le bias des gens a igniorer les nouveauter et a se concentrer sur les choses connues pourait se retrouvée au sein de ce qui est probablement amener a etre un assistante de dévelopement pour la plupart des informatitien et si il est possible d'essayer de corrigée ses propres bias coginitif, il ne seras pas possible en temps qu'utilisatuer de corrigée ceux d'une IA assiatante. Et donc tout travaille déléguer a cette AI seras forcement suceptible a ces bias. Et on sais que l'ia peut hériter de beacoup de bias de la part de ces créateurs. Il y a toutes les chanves pour qu'on retrouvée d'autres bias dans les techiniques de develelopement via IA;
+
+cela dis poir mitigé ces craintes il est important de garder en tete que les developer humain on aussi beacoup de bias variée et qui les IA en on aussi, la vrai question est de savoir si elles en aurons plus que les humain.
+
+
+REVOIRE MAIS JE PENSE QUE C'EST un peut hors sujet et que c'etait plus sur les ia conversationelle dans le civil et pas forcement dans le developement. Peut faire deux parties, une civil et une dévelopement
+parler des bias dans le code 
+
+
+
+parler du fait que si les vecteurs de normes comme l'education ou les journeaux commencais a s'en servir pour corigée ou reformuler des texte ca pourais avoir un impacte important sur la langues notament
+
+NOTES : séparer la partie bias et mise a jours.
+Trouvée une sitation pour les gens on tendance a rester sur des solutions.
+trouvée une citation pour les bias dans les IA.
+
+

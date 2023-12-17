@@ -1,4 +1,4 @@
-
+On noteras que lors de l'edition du document on a perdu certain partie des texte pre-chatGPT mais ce document est présent plus comme une preuve de bonne foix que comme une archive exaustive.
 
 \subsection{MCV et observer}
 Le pattern MVC (voire figure \ref{fig:MVC}) a été implementer dans ce projet car c'etait une des consignes, mais il permet aussi de mieux séparer les responsabiliter des classes en accordance avec le principe de single responsability (S de SOLID). Ce pattern repose principalement sur l'inmplementation de la class MessageStorage qui joue de role d'observable. Grace a l'interface observer utiliser par les acteurs qui on besoin de connaite l'etat du stockage des message, ce qui permet une invertion de dépendance (D de SOLID).

@@ -64,6 +64,19 @@ C'est notament vis a vis de cette problematique que la guilde des autheur americ
 \href{https://www.theguardian.com/culture/2023/oct/01/hollywood-writers-strike-artificial-intelligence}{www.theguardian.com/culture/hollywood-writers-strike}
 
 
+
+\subsection{Interaction Avec des Persones Vulnérables}
+
+La plupart des IA conversationelles on des comportement prédifinit qui servent notament a garder la conversation dans le domain de la bienseance. Malheureusement ces protection sont bien souvent facil a contournée avec des prompts spécifiquement fait pour controunée ces protection, ou meme parfois en répétant une idée plusieurs fois. C'est notament ce qui est arrivée a un homme belge nomée Pierre, qui conversait avec le chatbot "Eliza" disponible sur l'applicaiton Chai. Pierre parlait au bot des ses pultion suicidaires et si au début le bot a tentée de le découragée, lorsque Pierre continuait de parler de ces idée, le bot a finit par l'encouragée au suicide. Si il est difficile de determiner si cette conversation a eut un impact sur la déscision de Pierre de se suicidée, cette évenement a soulevée beacoup de question vis a vis des interaction des chatbots avec des persones fragiles au sain de l'entreprise qui avait déveloper ce bot.
+il est compliquer pour les déveloper d'ia de controler la reaction de leur model face toutes les situation et il ne seras sans doute jamais possible de completement empecher un IA de généré des contenues pouvant nuire a des persones fragiles. Cependans la plupart des entreprise d'ia prenne des meusures pour éviter ce genre de situation. L'entreprise dévelopant Elisat a par example mis en place une surcouche de verification qui offrait un lien vers des sites de support pour persones suicidaires si le sujet était aborder.
+
+
+
+\paragraph{Sources}
+\href{https://www.vice.com/en/article/pkadgm/man-dies-by-suicide-after-talking-with-ai-chatbot-widow-says}{www.vice.com/suicide-talking-with-ai}
+
+
+
 parler du fait que dans la meusure ou la plupart des IA génératives en sont pas runable localement (comme chatGPT) ca donnait un pouvoir important de direction au entreprises qui les dévelopent. Par example si on imagine un future un peut caricatural ou 100\% des developer utilise chatGPT, et que open IA fait une mise a jours du model qui le rend moins efficace pour le developement web mais meilleur pour le developement de jeux video, ca pourais avoir un enorme impact sur l'efficaciter des entreprises web et de celles de developement de jeux video sans que ces dernieres soit capable de faire grand chose. Sans meme parler de modification du model de manière malicieuse pour par example ralentire le developement de concurent a openAI, il est possible que openAI ait simplement un certain biais envers ou contre certain type de developement et que ce bias se reflete dans l'efficaciter de leur model dans le dévelopement de certain type d'applicaiton. Par example des dommaines qui ne sont pas très populaire aujourd'hui 
 ironiquement c'est ce qui est arrivée a l'ia qui etait vue comme un sujet de niche avant les ia biomimetique et qui maintenant est une des diciplines les plus populaires du monde de l'informatiqur. On peut se demander si un bias de la part de openIA envers les technologies qui on l'aire prometeuse aujourd'hui ne pourais ralentire le developement de nouveau secteur ou de secteur qui n'on pas l'aire pour l'instant très prometeurs alors qu'il pourait etre capital dans le future.
 
@@ -84,3 +97,9 @@ Trouvée une sitation pour les gens on tendance a rester sur des solutions.
 trouvée une citation pour les bias dans les IA.
 
 
+
+
+
+
+User
+est ce que l'ia est adaptés a tous, j'aimerais parlés aussi des ia qui n'ont pas de controle d'age ou de filtrage sur ce qui est demandé par l'interlocuteurs. Ce genre d'ia peuvent causé de nombreux problemes au jeune d'aujourdhui, on peut parler de la feneantise croissante, des jeunes qui ne savent que se reposer sur l'ia pour acomplir de nombreuse tache quelles soit difficile ou non, on peut avoir l'exemple de redige moi une lettre de motivation a remplace moi ce mot dans cette phrase, l'ia favorise la desinformation, les jeunes un peu trop naif ne prennent pas le temps de reflechir par eux meme a ce que l'ia leur donne et prennent tous pour certifié, la jeunesse perd son cotés critique petit a petit. On peut parler egalement parler du niveau scolaire qui est en baisse depuyis certaine année avec une generation qui prefere demander a chatgpt de faire un exercice plutot que de s'exercer. Une generation qui devient addict a cette nouvelle technologie et qui n'arrive plus a s'en passer voila le vrai probleme aujourd'hui. Nous avons vue a quelle point cette addiction etait dangereurse avec l'exemple du belge qui c'est suiidé "ref : Un Belge se suicide après avoir trouvé refuge auprès d'un robot conversationnel"

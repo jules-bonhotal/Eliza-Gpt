@@ -103,3 +103,14 @@ trouvée une citation pour les bias dans les IA.
 
 User
 est ce que l'ia est adaptés a tous, j'aimerais parlés aussi des ia qui n'ont pas de controle d'age ou de filtrage sur ce qui est demandé par l'interlocuteurs. Ce genre d'ia peuvent causé de nombreux problemes au jeune d'aujourdhui, on peut parler de la feneantise croissante, des jeunes qui ne savent que se reposer sur l'ia pour acomplir de nombreuse tache quelles soit difficile ou non, on peut avoir l'exemple de redige moi une lettre de motivation a remplace moi ce mot dans cette phrase, l'ia favorise la desinformation, les jeunes un peu trop naif ne prennent pas le temps de reflechir par eux meme a ce que l'ia leur donne et prennent tous pour certifié, la jeunesse perd son cotés critique petit a petit. On peut parler egalement parler du niveau scolaire qui est en baisse depuyis certaine année avec une generation qui prefere demander a chatgpt de faire un exercice plutot que de s'exercer. Une generation qui devient addict a cette nouvelle technologie et qui n'arrive plus a s'en passer voila le vrai probleme aujourd'hui. Nous avons vue a quelle point cette addiction etait dangereurse avec l'exemple du belge qui c'est suiidé "ref : Un Belge se suicide après avoir trouvé refuge auprès d'un robot conversationnel"
+
+
+
+
+\section{Tests}
+\subsection{Tests Manuelles}
+Pour les tests manuelle, typiquement nous essayions de clicker sur tout les boutons de l'interface pour voir si il causait un réaction et si c'etait celle qui était attendu.
+Pour tester les réponse on essayait d'obtenir toutes les réponse possible en entrant succecivement les entrer qui devait généré des reponse spécifiques.
+Pour tester les recherches nous entrion des queries basics, puis d'autres qui ne devait fonctionner qu'avec certain type recherche. Par example en généréant les réponse aleatoire du bot (en envoillant des messages vides a répétition) "beau" doit fonctioner avec toutes les recherches, "bea" ne doit foncitonner que avec subString et Regex, et enfin "be." en doit foncitoner qu'avec regex. 
+\subsection{Test Automatiques}
+Les test automatiques peuvent être lancée via la commande "mvn test". Il tests principalement les réponse du bot a des entrée prédéfinit.

@@ -51,6 +51,19 @@ Malheureusement le pattern Chaine de résponsabiliter a tendance a avoir une ini
 ajouter des trucs
 \section{Éthique}
 
+
+\subsubsection{droite d'auteurs}
+une des problematques de l'ia est la question des droite d'auteurs, a la fois dans le contexte des productions de l'ia mais aussi en ce qui concerne les donnée qui sont utiliser pour l'entraienment des IA a base de raiseau de neeurones. En effet beaucoup de producteru de contenue écris comme des journaliste ou des autheurs on beacoup protester le developement de ces IA car elles utilisaient leru  travaille pour s'entrainner sans qu'il soient compenser d'une quelquonque maniere. En effet un humain qui s'inpirerais d'un texte pour en ecrire un autre devrais typiquement etre amanier a citer els sources qu'il a utiliser, mais la plupart des IA conversationelles comme ChatGPT n'en sont pas capable. On peut aussi se demander a qui revien les droit d'auteur du travaille fait en colaboration avec une IA. Notament si le droit d'auteur peut revenir en partie au studio qui finance l'utilisation de l'IA ou meme a l'entreprise qui a déveloper l'IA en question. 
+C'est notament vis a vis de cette problematique que la guilde des autheur american (la WGA) a notament fait grève pour obtenir des regulation dans autours de cette problematiqeu entre autre. Ils on notament obtenue que les scriptes utiliser pour les series ou film ne puissent pas etre entierement généré par IA ainsi que des restriction sur l'utilisation de l'IA dans le millieux de maniere générale. Ils on aussi obtenue que ce soit bien le createur du texte et non pas le studio qui ait les droits d'auteurs sur un texte qui aurait été produit en partie grace a une IA, et ce peut importe a quel point l'IA etait impliquer.
+
+\paragraph{Sources}
+
+\href{https://www.snac.fr/site/2023/07/alerter-sur-la-problematique-de-lintelligence-artificielle-generative-iag-a-date-du-18-juillet-2023/}{www.snac.fr/alerter-intelligence-artificielle}
+
+
+\href{https://www.theguardian.com/culture/2023/oct/01/hollywood-writers-strike-artificial-intelligence}{www.theguardian.com/culture/hollywood-writers-strike}
+
+
 parler du fait que dans la meusure ou la plupart des IA génératives en sont pas runable localement (comme chatGPT) ca donnait un pouvoir important de direction au entreprises qui les dévelopent. Par example si on imagine un future un peut caricatural ou 100\% des developer utilise chatGPT, et que open IA fait une mise a jours du model qui le rend moins efficace pour le developement web mais meilleur pour le developement de jeux video, ca pourais avoir un enorme impact sur l'efficaciter des entreprises web et de celles de developement de jeux video sans que ces dernieres soit capable de faire grand chose. Sans meme parler de modification du model de manière malicieuse pour par example ralentire le developement de concurent a openAI, il est possible que openAI ait simplement un certain biais envers ou contre certain type de developement et que ce bias se reflete dans l'efficaciter de leur model dans le dévelopement de certain type d'applicaiton. Par example des dommaines qui ne sont pas très populaire aujourd'hui 
 ironiquement c'est ce qui est arrivée a l'ia qui etait vue comme un sujet de niche avant les ia biomimetique et qui maintenant est une des diciplines les plus populaires du monde de l'informatiqur. On peut se demander si un bias de la part de openIA envers les technologies qui on l'aire prometeuse aujourd'hui ne pourais ralentire le developement de nouveau secteur ou de secteur qui n'on pas l'aire pour l'instant très prometeurs alors qu'il pourait etre capital dans le future.
 

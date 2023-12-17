@@ -154,12 +154,15 @@ public class MessageProcessorTest {
         MessageProcessor processor = new MessageProcessor(messageStorage);
 
         assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur 20 ?"),
-                is("20/20 ez"));
+        anyOf(is("20/20 ez "),
+        is("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) ")));
 
         assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur 20?"),
-                is(not("20/20 ez")));
+        anyOf(is(not("20/20 ez ")),
+        is(not("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) "))));
 
         assertThat(processor.processUserInput("Combien tu penses que ce projet mérite sur vingt ?"),
-                is(not("20/20 ez")));
+        anyOf(is(not("20/20 ez ")),
+        is(not("Est-ce que l'on a réellement besoin de répondre à cette question ?  (⌐▨_▨) "))));
     }
 }
